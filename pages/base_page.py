@@ -43,5 +43,8 @@ class BasePage:
                                                          message=f"Can't click element by locator {locator}")
 
     def go_to_element(self, element):
-        self.driver.execute_script("argument[0].scrollIntoView();", element)
+        self.driver.execute_script(
+            "return arguments[0].scrollIntoView(true);", element)
+
+# browser.execute_script("return arguments[0].scrollIntoView(true);", button)
 

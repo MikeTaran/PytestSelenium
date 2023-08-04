@@ -1,1 +1,1 @@
-# PytestSelenium
+#  Автоматизация тестирования Pytest+Selenium

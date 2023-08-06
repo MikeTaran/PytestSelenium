@@ -3,12 +3,21 @@ import time
 
 import pytest
 
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
 
 url_textbox = 'https://demoqa.com/text-box'
 url_checkbox = 'https://demoqa.com/checkbox'
 url_radiobutton = 'https://demoqa.com/radio-button'
 url_webtable = 'https://demoqa.com/webtables'
+url_buttons = 'https://demoqa.com/buttons'
+
+
+class BattonPage:
+    pass
+
+
+class BattonsPage:
+    pass
 
 
 class TestElements:
@@ -103,6 +112,19 @@ class TestElements:
             # для строк 50 и 100
             data1, count1 = web_table_page.change_rows_count_fail()
             assert data1 == count1, "oops, It's not possible to choose 50 and 100 rows per page"
+
+    class TestButtonsPage:
+        def test_different_click_on_the_button(self, driver):
+            buttons_page = ButtonsPage(driver, url_buttons)
+            buttons_page.open()
+            double = buttons_page.click_on_different_button('double')
+            right = buttons_page.click_on_different_button('right')
+            click = buttons_page.click_on_different_button('click')
+
+            assert double == 'You have done a double click'
+            assert right == 'You have done a right click'
+            assert click == 'You have done a dynamic click'
+
 
 
 

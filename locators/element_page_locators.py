@@ -55,3 +55,14 @@ class WebTablePageLocators:
     COUNT_ROWS = (By.CSS_SELECTOR, "select[aria-label='rows per page']")
     # delete person
     DELETE_CONFIRMATION = (By.CSS_SELECTOR, 'div [class="rt-noData"]')
+
+
+class ButtonsPageLocators:
+    DOUBLE_CLICK_BUTTON = (By.CSS_SELECTOR, 'button[id="doubleClickBtn"]')
+    RIGHT_CLICK_BUTTON = (By.CSS_SELECTOR, 'button[id="rightClickBtn"]')
+    DYNAMIC_CLICK_BUTTON = (By.XPATH, '//div[3]/button')
+    # result
+    DOUBLE_CLICK_MESSAGE = (By.CSS_SELECTOR, 'p[id="doubleClickMessage"]')
+    RIGHT_CLICK_MESSAGE = (By.CSS_SELECTOR, 'p[id="rightClickMessage"]')
+    DYNAMIC_CLICK_MESSAGE = (By.CSS_SELECTOR, 'p[id="dynamicClickMessage"]')
+

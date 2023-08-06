@@ -1,8 +1,10 @@
-import time
-from pages.elements_page import TextBoxPage, CheckBoxPage
+import pytest
+
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
 
 url_textbox = 'https://demoqa.com/text-box'
 url_checkbox = 'https://demoqa.com/checkbox'
+url_radiobutton = 'https://demoqa.com/radio-button'
 
 
 class TestElements:
@@ -30,3 +32,17 @@ class TestElements:
 
             assert checked_list == output_list, 'Checked list is not correct'
 
+    class TestRadioButton:
+        @pytest.mark.xfail
+        def test_radio_button(self, driver):
+            radio_button_page = RadioButtonPage(driver, url_radiobutton)
+            radio_button_page.open()
+            radio_button_page.click_radio_button('yes')
+            output_yes = radio_button_page.get_output_result()
+            radio_button_page.click_radio_button('impressive')
+            output_impressive = radio_button_page.get_output_result()
+            radio_button_page.click_radio_button('no')
+            output_no = radio_button_page.get_output_result()
+            assert output_yes == 'Yes', 'Radio_Yes was not selected'
+            assert output_impressive == 'Impressive', 'Radio_Impressive was not selected'
+            assert output_no == 'No', 'Radio_No was not selected'

@@ -25,3 +25,9 @@ class CheckBoxPageLocators:
     OUTPUT_LIST = (By.CSS_SELECTOR, "#result .text-success")
 
 
+class RadioButtonPageLocators:
+    list_radio_btn = (By.CSS_SELECTOR, "div input")
+    radio_btn_yes = (By.CSS_SELECTOR, "label[for='yesRadio']")
+    radio_btn_impress = (By.CSS_SELECTOR, "label[for='impressiveRadio']")
+    radio_btn_no = (By.CSS_SELECTOR, "label[for='noRadio']")
+    output_message = (By.CSS_SELECTOR, "p [class = 'text-success']")

@@ -148,4 +148,28 @@ class WebTablePage(BasePage):
     def get_delete_confirmation(self):
         return self.element_is_present(self.locators.DELETE_CONFIRMATION).text
 
+    def change_rows_count(self):
+        count = [5, 10, 20, 25]
+        data = []
+        count_row_button = self.element_is_visible(self.locators.COUNT_ROWS)
+        for x in count:
+            self.go_to_element(count_row_button)
+            count_row_button.click()
+            self.element_is_visible((By.CSS_SELECTOR, f'option[value="{x}"]')).click()
+            data.append(self.get_count_rows())
+        return data, count
 
+    def change_rows_count_fail(self):
+        count = [50, 100]
+        data = []
+        count_row_button = self.element_is_visible(self.locators.COUNT_ROWS)
+        for x in count:
+            self.go_to_element(count_row_button)
+            count_row_button.click()
+            self.element_is_present((By.CSS_SELECTOR, f'option[value="{x}"]')).click()
+            data.append(self.get_count_rows())
+        return data, count
+
+    def get_count_rows(self):
+        list_rows = self.elements_are_present(self.locators.FULL_PERSONS_LIST)
+        return len(list_rows)

@@ -94,6 +94,17 @@ class TestElements:
             text = web_table_page.get_delete_confirmation()
             assert text == 'No rows found', ''
 
+        @pytest.mark.xfail
+        def test_web_table_rows_per_page(self, driver):
+            web_table_page = WebTablePage(driver, url_webtable)
+            web_table_page.open()
+            data, count = web_table_page.change_rows_count()
+            assert data == count, "oops, It's not possible to choose 5, 10, 20, 25 rows per page"
+            # для строк 50 и 100
+            data1, count1 = web_table_page.change_rows_count_fail()
+            assert data1 == count1, "oops, It's not possible to choose 50 and 100 rows per page"
+
+
 
 
 

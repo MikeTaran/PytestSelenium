@@ -85,6 +85,17 @@ class TestElements:
             row = web_table_page.get_search_person()
             assert age in row, 'The person info was not updated'
 
+        def test_delete_person(self, driver):
+            web_table_page = WebTablePage(driver, url_webtable)
+            web_table_page.open()
+            email = web_table_page.add_new_person()[0][3]
+            web_table_page.search_person(email)
+            web_table_page.delete_person()
+            text = web_table_page.get_delete_confirmation()
+            assert text == 'No rows found', ''
+
+
+
 
 
 

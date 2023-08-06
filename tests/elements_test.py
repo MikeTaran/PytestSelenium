@@ -1,10 +1,14 @@
+import random
+import time
+
 import pytest
 
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage
 
 url_textbox = 'https://demoqa.com/text-box'
 url_checkbox = 'https://demoqa.com/checkbox'
 url_radiobutton = 'https://demoqa.com/radio-button'
+url_webtable = 'https://demoqa.com/webtables'
 
 
 class TestElements:
@@ -46,3 +50,30 @@ class TestElements:
             assert output_yes == 'Yes', 'Radio_Yes was not selected'
             assert output_impressive == 'Impressive', 'Radio_Impressive was not selected'
             assert output_no == 'No', 'Radio_No was not selected'
+
+    class TestWebTable:
+        def test_web_table_add_person(self, driver):
+            web_table_page = WebTablePage(driver, url_webtable)
+            web_table_page.open()
+            input_list = web_table_page.add_new_person(random.randint(1, 5))
+            output_list = web_table_page.get_full_persons_list()
+            for input_item in input_list:
+                assert input_item in output_list, 'List of new persons is Not correct'
+
+        def test_search_person(self, driver):
+            web_table_page = WebTablePage(driver, url_webtable)
+            web_table_page.open()
+            web_table_page.add_new_person(random.randint(1, 5))
+            output_list = web_table_page.get_full_persons_list()
+            # определяем количество заполненных строк
+            empty_row_qty = web_table_page.get_empty_row_qty()
+            output_list_qty = len(output_list)
+            filled_row_qty = output_list_qty - empty_row_qty - 1
+
+            # случайный критерий для поиска
+            key_word = output_list[random.randint(0, filled_row_qty)][random.randint(0, 5)]
+            web_table_page.search_person(key_word)
+            search_result = web_table_page.get_search_person()
+
+            assert key_word in search_result, ''
+

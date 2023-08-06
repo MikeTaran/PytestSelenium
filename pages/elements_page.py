@@ -1,10 +1,11 @@
 import random
-import time
+
 
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person
-from locators.element_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators
+from locators.element_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, \
+    WebTablePageLocators
 from pages.base_page import BasePage
 
 
@@ -85,4 +86,54 @@ class RadioButtonPage(BasePage):
 
     def get_output_result(self):
         return self.element_is_present(self.locators.output_message).text
+
+
+class WebTablePage(BasePage):
+    locators = WebTablePageLocators()
+
+    def add_new_person(self, count=1):
+        data_input = []
+        # count = random.randint(1, 3)
+        while count != 0:
+            person_info = next(generated_person())
+            firstname = person_info.firstname
+            lastname = person_info.lastname
+            email = person_info.email
+            age = person_info.age
+            salary = person_info.salary
+            department = person_info.department
+            self.element_is_visible(self.locators.ADD_BUTTON).click()
+            self.element_is_visible(self.locators.FIRSTNAME_INPUT).send_keys(firstname)
+            self.element_is_visible(self.locators.LASTNAME_INPUT).send_keys(lastname)
+            self.element_is_visible(self.locators.EMAIL_INPUT).send_keys(email)
+            self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
+            self.element_is_visible(self.locators.SALARY_INPUT).send_keys(salary)
+            self.element_is_visible(self.locators.DEPARTMENT_INPUT).send_keys(department)
+            self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
+            #
+            data_input.append([firstname, lastname, str(age), email, str(salary), department])
+            count -= 1
+        return data_input
+
+    def get_full_persons_list(self):
+        data_output = []
+        persons_list = self.elements_are_present(self.locators.FULL_PERSONS_LIST)
+        for row_list in persons_list:
+            # разделение текста по разделителю переноса строки '\n' : list.splitlines()
+            data_output.append(row_list.text.splitlines())
+        return data_output
+
+    def get_empty_row_qty(self):
+        return len(self.elements_are_present(self.locators.EMPTY_ROW_LIST))
+
+
+
+    def search_person(self, key_word):
+        self.element_is_visible(self.locators.SEARCH_INPUT).send_keys(key_word)
+
+    def get_search_person(self):
+        delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
+        row = delete_button.find_element(By.XPATH, self.locators.ROW_PARENT)
+        return row.text.splitlines()
+
 

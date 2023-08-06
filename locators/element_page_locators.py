@@ -31,3 +31,25 @@ class RadioButtonPageLocators:
     radio_btn_impress = (By.CSS_SELECTOR, "label[for='impressiveRadio']")
     radio_btn_no = (By.CSS_SELECTOR, "label[for='noRadio']")
     output_message = (By.CSS_SELECTOR, "p [class = 'text-success']")
+
+
+class WebTablePageLocators:
+    # add new person form
+    ADD_BUTTON = (By.CSS_SELECTOR, "#addNewRecordButton")
+    REGISTRATION_FORM = (By.CSS_SELECTOR, "div[class='modal-content']")
+    FIRSTNAME_INPUT = (By.CSS_SELECTOR, "input[id='firstName']")
+    LASTNAME_INPUT = (By.CSS_SELECTOR, "input[id='lastName']")
+    EMAIL_INPUT = (By.CSS_SELECTOR, 'input[id="userEmail"]')
+    AGE_INPUT = (By.CSS_SELECTOR, 'input[id="age"]')
+    SALARY_INPUT = (By.CSS_SELECTOR, 'input[id="salary"]')
+    DEPARTMENT_INPUT = (By.CSS_SELECTOR, 'input[id="department"]')
+    SUBMIT_BUTTON = (By.CSS_SELECTOR, 'button[id="submit"]')
+
+    # table
+    FULL_PERSONS_LIST = (By.CSS_SELECTOR, 'div[class="rt-tr-group"]')
+    EMPTY_ROW_LIST = (By.CSS_SELECTOR, 'div .-padRow')
+    SEARCH_INPUT = (By.CSS_SELECTOR, 'input[id="searchBox"]')
+    DELETE_BUTTON = (By.CSS_SELECTOR, 'span[title="Delete"]')
+    EDIT_BUTTON = (By.CSS_SELECTOR, 'span[title="Edit"]')
+    ROW_PARENT = './/ancestor::div[@class="rt-tr-group"]'
+

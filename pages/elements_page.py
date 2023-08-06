@@ -1,6 +1,5 @@
 import random
 
-
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person
@@ -126,8 +125,6 @@ class WebTablePage(BasePage):
     def get_empty_row_qty(self):
         return len(self.elements_are_present(self.locators.EMPTY_ROW_LIST))
 
-
-
     def search_person(self, key_word):
         self.element_is_visible(self.locators.SEARCH_INPUT).send_keys(key_word)
 
@@ -136,4 +133,12 @@ class WebTablePage(BasePage):
         row = delete_button.find_element(By.XPATH, self.locators.ROW_PARENT)
         return row.text.splitlines()
 
+    def update_person_info(self):
+        person_info = next(generated_person())
+        age = person_info.age
+        self.element_is_visible(self.locators.EDIT_BUTTON).click()
+        self.element_is_visible(self.locators.AGE_INPUT).clear()
+        self.element_is_visible(self.locators.AGE_INPUT).send_keys(age)
+        self.element_is_visible(self.locators.SUBMIT_BUTTON).click()
+        return str(age)
 

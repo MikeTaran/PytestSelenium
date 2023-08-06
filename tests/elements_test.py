@@ -60,7 +60,7 @@ class TestElements:
             for input_item in input_list:
                 assert input_item in output_list, 'List of new persons is Not correct'
 
-        def test_search_person(self, driver):
+        def test_web_table_search_person(self, driver):
             web_table_page = WebTablePage(driver, url_webtable)
             web_table_page.open()
             web_table_page.add_new_person(random.randint(1, 5))
@@ -74,6 +74,17 @@ class TestElements:
             key_word = output_list[random.randint(0, filled_row_qty)][random.randint(0, 5)]
             web_table_page.search_person(key_word)
             search_result = web_table_page.get_search_person()
-
             assert key_word in search_result, ''
+
+        def test_web_table_update_person_info(self, driver):
+            web_table_page = WebTablePage(driver, url_webtable)
+            web_table_page.open()
+            last_name = web_table_page.add_new_person()[0][1]
+            web_table_page.search_person(last_name)
+            age = web_table_page.update_person_info()
+            row = web_table_page.get_search_person()
+            assert age in row, 'The person info was not updated'
+
+
+
 

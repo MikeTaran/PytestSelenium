@@ -23,7 +23,7 @@ class BasePage:
         return WebDriverWait(self.driver, timeout).until(EC.visibility_of_all_elements_located(locator),
                                                          message=f"Can't see element by locator {locator}")
 
-    def element_is_present(self, locator, timeout=5):
+    def element_is_present(self, locator, timeout=10):
         return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(locator),
                                                          message=f"Element not present by locator {locator}")
 

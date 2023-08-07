@@ -66,3 +66,8 @@ class ButtonsPageLocators:
     RIGHT_CLICK_MESSAGE = (By.CSS_SELECTOR, 'p[id="rightClickMessage"]')
     DYNAMIC_CLICK_MESSAGE = (By.CSS_SELECTOR, 'p[id="dynamicClickMessage"]')
 
+
+class LinksPageLocators:
+    HOME_LINK = (By.CSS_SELECTOR, '')
+    DYNAMIC_HOME_LINK = (By.CSS_SELECTOR, '')
+    BAD_REQUEST_LINK = (By.CSS_SELECTOR, '')

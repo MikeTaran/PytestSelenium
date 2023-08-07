@@ -2,22 +2,14 @@ import random
 import time
 
 import pytest
-
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
 
 url_textbox = 'https://demoqa.com/text-box'
 url_checkbox = 'https://demoqa.com/checkbox'
 url_radiobutton = 'https://demoqa.com/radio-button'
 url_webtable = 'https://demoqa.com/webtables'
 url_buttons = 'https://demoqa.com/buttons'
-
-
-class BattonPage:
-    pass
-
-
-class BattonsPage:
-    pass
+url_links = 'https://demoqa.com/links'
 
 
 class TestElements:
@@ -121,14 +113,15 @@ class TestElements:
             right = buttons_page.click_on_different_button('right')
             click = buttons_page.click_on_different_button('click')
 
-            assert double == 'You have done a double click'
-            assert right == 'You have done a right click'
-            assert click == 'You have done a dynamic click'
+            assert double == 'You have done a double click', 'Double-click button was not pressed'
+            assert right == 'You have done a right click', 'Right-click button was not pressed'
+            assert click == 'You have done a dynamic click', 'Dynamic button was not pressed'
 
+    class TestLinksPage:
+        def test_check_link(self, driver):
+            links_page = LinksPage(driver, url_links)
+            links_page.open()
 
-
-
-
-
-
-
+        def test_api_link(self, driver):
+            links_page = LinksPage(driver, url_links)
+            links_page.open()

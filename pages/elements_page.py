@@ -1,10 +1,11 @@
 import random
+import time
 
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person
 from locators.element_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, \
-    WebTablePageLocators, ButtonsPageLocators
+    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators
 from pages.base_page import BasePage
 
 
@@ -45,7 +46,6 @@ class CheckBoxPage(BasePage):
 
     def click_random_checkbox(self):
         checkbox_list = self.elements_are_present(self.locators.CHECKBOX_ITEM_LIST)
-        print('\n', len(checkbox_list))
         for _ in range(len(checkbox_list)):
             item = checkbox_list[random.randint(0, len(checkbox_list) - 1)]
             self.go_to_element(item)
@@ -53,21 +53,17 @@ class CheckBoxPage(BasePage):
 
     def get_checked_list(self):
         checked_list = self.elements_are_present(self.locators.CHECKED_LIST)
-        print(len(checked_list))
         checked_title_list = []
         for box in checked_list:
             title_item = box.find_element(By.XPATH, self.locators.TITLE_ITEM)
             checked_title_list.append(title_item.text)
-        print(checked_title_list)
         return str(checked_title_list).replace(' ', '').replace('.doc', '').lower()
 
     def get_output_result(self):
         output_list = self.elements_are_present(self.locators.OUTPUT_LIST)
-        print(len(output_list))
         checked_output_list = []
         for item in output_list:
             checked_output_list.append(item.text)
-        print(checked_output_list)
         return str(checked_output_list).replace(' ', '').lower()
 
 
@@ -126,7 +122,9 @@ class WebTablePage(BasePage):
         return len(self.elements_are_present(self.locators.EMPTY_ROW_LIST))
 
     def search_person(self, key_word):
-        self.element_is_visible(self.locators.SEARCH_INPUT).send_keys(key_word)
+        search_field = self.element_is_visible(self.locators.SEARCH_INPUT)
+        search_field.clear()
+        search_field.send_keys(key_word)
 
     def get_search_person(self):
         delete_button = self.element_is_present(self.locators.DELETE_BUTTON)
@@ -193,3 +191,10 @@ class ButtonsPage(BasePage):
 
     def get_success_message(self, element):
         return self.element_is_present(element).text
+
+
+class LinksPage(BasePage):
+    locators = LinksPageLocators()
+    def check_new_tab_simple_link(self):
+        pass
+

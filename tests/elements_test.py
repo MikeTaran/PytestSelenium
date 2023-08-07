@@ -70,7 +70,6 @@ class TestElements:
             empty_row_qty = web_table_page.get_empty_row_qty()
             output_list_qty = len(output_list)
             filled_row_qty = output_list_qty - empty_row_qty - 1
-
             # случайный критерий для поиска
             key_word = output_list[random.randint(0, filled_row_qty)][random.randint(0, 5)]
             web_table_page.search_person(key_word)
@@ -129,3 +128,4 @@ class TestElements:
         def test_api_link(self, driver):
             links_page = LinksPage(driver, url_links)
             links_page.open()
+            time.sleep(10)

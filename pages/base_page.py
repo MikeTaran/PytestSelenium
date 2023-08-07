@@ -10,6 +10,7 @@ class BasePage:
 
     def open(self):
         self.driver.get(self.url)
+        self.remove_footer_and_banners()
 
     def element_is_visible(self, locator, timeout=5):
         return WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator),
@@ -58,3 +59,17 @@ class BasePage:
         action = ActionChains(self.driver)
         action.context_click(element)
         action.perform()
+
+    # remove banners
+    def remove_footer_and_banners(self):
+        tab_name = self.driver.window_handles[0]
+        try:
+            self.driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
+            self.driver.execute_script("document.getElementById('close-fixedban').remove();")
+            self.driver.execute_script("document.getElementById('adplus-anchor').remove();")
+            self.driver.execute_script("document.getElementById('RightSide_Advertisement').remove();")
+            self.driver.switch_to.frame(0)
+            self.driver.execute_script("document.getElementById('google_image_div').remove();")
+            self.driver.switch_to.window(tab_name)
+        except:
+            self.driver.switch_to.window(tab_name)

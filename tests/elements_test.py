@@ -118,9 +118,13 @@ class TestElements:
             assert click == 'You have done a dynamic click', 'Dynamic button was not pressed'
 
     class TestLinksPage:
-        def test_check_link(self, driver):
+        def test_new_tab_link(self, driver):
             links_page = LinksPage(driver, url_links)
             links_page.open()
+            href, new_tab = links_page.check_new_tab_link('simple')
+            assert href == new_tab, 'Bad request'
+            href, new_tab = links_page.check_new_tab_link('dynamic')
+            assert href == new_tab, 'bad request'
 
         def test_api_link(self, driver):
             links_page = LinksPage(driver, url_links)

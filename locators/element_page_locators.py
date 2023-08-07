@@ -68,6 +68,7 @@ class ButtonsPageLocators:
 
 
 class LinksPageLocators:
-    HOME_LINK = (By.CSS_SELECTOR, '')
-    DYNAMIC_HOME_LINK = (By.CSS_SELECTOR, '')
-    BAD_REQUEST_LINK = (By.CSS_SELECTOR, '')
+    # id="bad-request"
+    SIMPLE_HOME_LINK = (By.CSS_SELECTOR, 'a[id="simpleLink"]')
+    DYNAMIC_HOME_LINK = (By.CSS_SELECTOR, 'a[id="dynamicLink"]')
+    LINK_FULL_LIST = (By.CSS_SELECTOR, 'p>a')

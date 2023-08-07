@@ -1,6 +1,6 @@
 import random
-import time
 
+import requests
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person
@@ -195,6 +195,26 @@ class ButtonsPage(BasePage):
 
 class LinksPage(BasePage):
     locators = LinksPageLocators()
-    def check_new_tab_simple_link(self):
-        pass
 
+    def check_new_tab_link(self, type_link):
+        new_tab_link = ''
+        if type_link == 'simple':
+            new_tab_link = self.element_is_visible(self.locators.SIMPLE_HOME_LINK)
+        elif type_link == 'dynamic':
+            new_tab_link = self.element_is_visible(self.locators.DYNAMIC_HOME_LINK)
+        href = new_tab_link.get_attribute('href')
+        request = requests.get(href).status_code
+        if request == 200:
+            new_tab_link.click()
+            tab_list = self.driver.window_handles
+            self.driver.switch_to.window(tab_list[1])
+            tab_url = self.driver.current_url
+            self.driver.switch_to.window(tab_list[0])
+            return href, tab_url
+        else:
+            return href, request
+
+    def check_api_link(self):
+        links_list = self.elements_are_present(self.locators.LINK_FULL_LIST)
+        for link in links_list:
+            print(link.text)

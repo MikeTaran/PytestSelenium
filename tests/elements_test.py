@@ -2,7 +2,7 @@ import random
 
 import pytest
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
-    DownUploadPage
+    DownUploadPage, DynamicPropsPage
 
 url_textbox = 'https://demoqa.com/text-box'
 url_checkbox = 'https://demoqa.com/checkbox'
@@ -11,6 +11,7 @@ url_webtable = 'https://demoqa.com/webtables'
 url_buttons = 'https://demoqa.com/buttons'
 url_links = 'https://demoqa.com/links'
 url_down_upload = 'https://demoqa.com/upload-download'
+url_dynamic = 'https://demoqa.com/dynamic-properties'
 
 
 class TestElements:
@@ -145,3 +146,22 @@ class TestElements:
             down_upload_page.open()
             check_file = down_upload_page.download_file()
             assert check_file, 'The File was not download'
+
+    class TestDynamicPropsPage:
+        def test_dynamic_text(self, driver):
+            dynamic_page = DynamicPropsPage(driver, url_dynamic)
+            dynamic_page.open()
+
+        def test_enable_alert(self, driver):
+            dynamic_page = DynamicPropsPage(driver, url_dynamic)
+            dynamic_page.open()
+
+        def test_color_change(self, driver):
+            dynamic_page = DynamicPropsPage(driver, url_dynamic)
+            dynamic_page.open()
+
+        def test_visible_alert(self, driver):
+            dynamic_page = DynamicPropsPage(driver, url_dynamic)
+            dynamic_page.open()
+
+

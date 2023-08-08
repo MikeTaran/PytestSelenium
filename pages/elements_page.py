@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person, generated_file
 from locators.element_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, \
-    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, DownUploadPageLocators
+    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, DownUploadPageLocators, DynamicPropsPageLocators
 from pages.base_page import BasePage
 
 
@@ -262,3 +262,19 @@ class DownUploadPage(BasePage):
             my_file.close()
         os.remove(file_path)
         return check_file
+
+
+class DynamicPropsPage(BasePage):
+    locators = DynamicPropsPageLocators()
+
+    def dynamic_test(self):
+        pass
+
+    def enable_alert(self):
+        pass
+
+    def color_change(self):
+        pass
+
+    def visible_alert(self):
+        pass

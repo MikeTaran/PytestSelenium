@@ -73,3 +73,9 @@ class LinksPageLocators:
     DYNAMIC_HOME_LINK = (By.CSS_SELECTOR, 'a[id="dynamicLink"]')
     LIST_API_LINKS = (By.CSS_SELECTOR, 'p>a')
     SUCCESS_MESSAGE = (By.CSS_SELECTOR, 'p[id="linkResponse"] b')
+
+
+class DownUploadPageLocators:
+    UPLOAD_BUTTON = (By.CSS_SELECTOR, 'input[id="uploadFile"]')
+    UPLOADED_MESSAGE = (By.CSS_SELECTOR, 'p[id="uploadedFilePath"]')
+    DOWNLOAD_BUTTON = (By.CSS_SELECTOR, 'a[id="downloadButton"]')

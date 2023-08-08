@@ -1,7 +1,8 @@
 import random
 
 import pytest
-from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
+from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
+    DownUploadPage
 
 url_textbox = 'https://demoqa.com/text-box'
 url_checkbox = 'https://demoqa.com/checkbox'
@@ -9,6 +10,7 @@ url_radiobutton = 'https://demoqa.com/radio-button'
 url_webtable = 'https://demoqa.com/webtables'
 url_buttons = 'https://demoqa.com/buttons'
 url_links = 'https://demoqa.com/links'
+url_down_upload = 'https://demoqa.com/upload-download'
 
 
 class TestElements:
@@ -130,3 +132,16 @@ class TestElements:
             for i in range(2, 9):
                 name_link, request, code, status = links_page.check_api_link(i)
                 assert code == str(request), 'Bad request to API'
+
+    class TestDownUploadFile:
+        def test_upload_file(self, driver):
+            down_upload_page = DownUploadPage(driver, url_down_upload)
+            down_upload_page.open()
+            name, message = down_upload_page.upload_file()
+            assert name == message, 'The File was not upload'
+
+        def test_download_file(self, driver):
+            down_upload_page = DownUploadPage(driver, url_down_upload)
+            down_upload_page.open()
+            check_file = down_upload_page.download_file()
+            assert check_file, 'The File was not download'

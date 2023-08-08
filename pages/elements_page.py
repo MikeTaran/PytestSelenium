@@ -1,12 +1,14 @@
+import base64
+import os
 import random
 import time
 
 import requests
 from selenium.webdriver.common.by import By
 
-from generator.generator import generated_person
+from generator.generator import generated_person, generated_file
 from locators.element_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, \
-    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators
+    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, DownUploadPageLocators
 from pages.base_page import BasePage
 
 
@@ -217,14 +219,14 @@ class LinksPage(BasePage):
 
     def check_api_link(self, i):
         api_links = {
-                'Created': 'https://demoqa.com/created',
-                'No Content': 'https://demoqa.com/no-content',
-                'Moved': 'https://demoqa.com/moved',
-                'Bad Request': 'https://demoqa.com/bad-request',
-                'Unauthorized': 'https://demoqa.com/unauthorized',
-                'Forbidden': 'https://demoqa.com/forbidden',
-                'Not Found': 'https://demoqa.com/invalid-url',
-            }
+            'Created': 'https://demoqa.com/created',
+            'No Content': 'https://demoqa.com/no-content',
+            'Moved': 'https://demoqa.com/moved',
+            'Bad Request': 'https://demoqa.com/bad-request',
+            'Unauthorized': 'https://demoqa.com/unauthorized',
+            'Forbidden': 'https://demoqa.com/forbidden',
+            'Not Found': 'https://demoqa.com/invalid-url',
+        }
 
         links_list = self.elements_are_present(self.locators.LIST_API_LINKS)
         name_link = links_list[i].text
@@ -235,3 +237,28 @@ class LinksPage(BasePage):
         code = response_message[0].text
         status = response_message[1].text
         return name_link, request, code, status
+
+
+class DownUploadPage(BasePage):
+    locators = DownUploadPageLocators()
+
+    def upload_file(self):
+        file_name, path = generated_file()
+        self.element_is_present(self.locators.UPLOAD_BUTTON).send_keys(path)
+        os.remove(path)
+        uploaded_message = self.element_is_present(self.locators.UPLOADED_MESSAGE).text
+        name = file_name.split('\\')[-1]
+        message = uploaded_message.split('\\')[-1]
+        return name, message
+
+    def download_file(self):
+        link = self.element_is_present(self.locators.DOWNLOAD_BUTTON).get_attribute('href').split(',')
+        link_b64 = base64.b64decode(link[1])
+        current_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        file_path = os.path.join(current_dir, f'filetest_{random.randint(1, 999)}.jpg')
+        with open(file_path, "wb+") as my_file:
+            my_file.write(link_b64)
+            check_file = os.path.exists(file_path)
+            my_file.close()
+        os.remove(file_path)
+        return check_file

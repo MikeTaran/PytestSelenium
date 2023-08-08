@@ -1,4 +1,5 @@
 import random
+import time
 
 import requests
 from selenium.webdriver.common.by import By
@@ -214,7 +215,23 @@ class LinksPage(BasePage):
         else:
             return href, request
 
-    def check_api_link(self):
-        links_list = self.elements_are_present(self.locators.LINK_FULL_LIST)
-        for link in links_list:
-            print(link.text)
+    def check_api_link(self, i):
+        api_links = {
+                'Created': 'https://demoqa.com/created',
+                'No Content': 'https://demoqa.com/no-content',
+                'Moved': 'https://demoqa.com/moved',
+                'Bad Request': 'https://demoqa.com/bad-request',
+                'Unauthorized': 'https://demoqa.com/unauthorized',
+                'Forbidden': 'https://demoqa.com/forbidden',
+                'Not Found': 'https://demoqa.com/invalid-url',
+            }
+
+        links_list = self.elements_are_present(self.locators.LIST_API_LINKS)
+        name_link = links_list[i].text
+        request = requests.get(api_links[name_link]).status_code
+        links_list[i].click()
+        time.sleep(2)
+        response_message = self.elements_are_present(self.locators.SUCCESS_MESSAGE)
+        code = response_message[0].text
+        status = response_message[1].text
+        return name_link, request, code, status

@@ -71,4 +71,5 @@ class LinksPageLocators:
     # id="bad-request"
     SIMPLE_HOME_LINK = (By.CSS_SELECTOR, 'a[id="simpleLink"]')
     DYNAMIC_HOME_LINK = (By.CSS_SELECTOR, 'a[id="dynamicLink"]')
-    LINK_FULL_LIST = (By.CSS_SELECTOR, 'p>a')
+    LIST_API_LINKS = (By.CSS_SELECTOR, 'p>a')
+    SUCCESS_MESSAGE = (By.CSS_SELECTOR, 'p[id="linkResponse"] b')

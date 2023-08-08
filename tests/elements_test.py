@@ -1,5 +1,4 @@
 import random
-import time
 
 import pytest
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage
@@ -128,4 +127,6 @@ class TestElements:
         def test_api_link(self, driver):
             links_page = LinksPage(driver, url_links)
             links_page.open()
-            time.sleep(10)
+            for i in range(2, 9):
+                name_link, request, code, status = links_page.check_api_link(i)
+                assert code == str(request), 'Bad request to API'

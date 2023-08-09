@@ -80,9 +80,9 @@ class DownUploadPageLocators:
     UPLOADED_MESSAGE = (By.CSS_SELECTOR, 'p[id="uploadedFilePath"]')
     DOWNLOAD_BUTTON = (By.CSS_SELECTOR, 'a[id="downloadButton"]')
 
+
 class DynamicPropsPageLocators:
-    DYNAMIC_TEXT = (By.CSS_SELECTOR, '')
+    DYNAMIC_TEXT = (By.XPATH, "//*[contains(text(), 'random Id')]")
     ENABLE_ALERT_BUTTON = (By.CSS_SELECTOR, 'button[id="enableAfter"]')
     COLOR_CHANGE_BUTTON = (By.CSS_SELECTOR, 'button[id="colorChange"]')
     VISIBLE_ALERT_BUTTON = (By.CSS_SELECTOR, 'button[id="visibleAfter"]')
-

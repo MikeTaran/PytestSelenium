@@ -16,6 +16,7 @@ url_dynamic = 'https://demoqa.com/dynamic-properties'
 
 class TestElements:
     class TestTextBox:
+        @pytest.mark.test
         def test_text_box(self, driver):
             text_box_page = TextBoxPage(driver, url_textbox)
             text_box_page.open()
@@ -151,17 +152,23 @@ class TestElements:
         def test_dynamic_text(self, driver):
             dynamic_page = DynamicPropsPage(driver, url_dynamic)
             dynamic_page.open()
+            text_id_1, text_id_2 = dynamic_page.get_text_id()
+            assert text_id_1 != text_id_2, "The element ID is not dynamic"
 
-        def test_enable_alert(self, driver):
+        def test_enable_button(self, driver):
             dynamic_page = DynamicPropsPage(driver, url_dynamic)
             dynamic_page.open()
+            enable_click = dynamic_page.enable_button()
+            assert enable_click, 'The button is not enable/clickable'
 
         def test_color_change(self, driver):
             dynamic_page = DynamicPropsPage(driver, url_dynamic)
             dynamic_page.open()
+            color_button_before, color_button_after = dynamic_page.color_change()
+            assert color_button_before != color_button_after, 'Color was not changed'
 
-        def test_visible_alert(self, driver):
+        def test_visible_button(self, driver):
             dynamic_page = DynamicPropsPage(driver, url_dynamic)
             dynamic_page.open()
-
-
+            appeared = dynamic_page.visible_button()
+            assert appeared, 'The alert is not appeared'

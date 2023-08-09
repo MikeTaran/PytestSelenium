@@ -4,6 +4,7 @@ import random
 import time
 
 import requests
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person, generated_file
@@ -267,14 +268,30 @@ class DownUploadPage(BasePage):
 class DynamicPropsPage(BasePage):
     locators = DynamicPropsPageLocators()
 
-    def dynamic_test(self):
-        pass
+    def get_text_id(self):
+        text = self.element_is_visible(self.locators.DYNAMIC_TEXT)
+        text_id_1 = text.get_attribute('id')
+        self.refresh_window()
+        text = self.element_is_visible(self.locators.DYNAMIC_TEXT)
+        text_id_2 = text.get_attribute('id')
+        return text_id_1, text_id_2
 
-    def enable_alert(self):
-        pass
+
+    def enable_button(self):
+        try:
+            return self.element_is_clickable(self.locators.ENABLE_ALERT_BUTTON)
+        except TimeoutException:
+            return False
 
     def color_change(self):
-        pass
+        color_button = self.element_is_present(self.locators.COLOR_CHANGE_BUTTON)
+        color_button_before = color_button.value_of_css_property('color')
+        time.sleep(5)
+        color_button_after = color_button.value_of_css_property('color')
+        return color_button_before, color_button_after
 
-    def visible_alert(self):
-        pass
+    def visible_button(self):
+        try:
+            return self.element_is_visible(self.locators.VISIBLE_ALERT_BUTTON)
+        except TimeoutException:
+            return False

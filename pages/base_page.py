@@ -73,3 +73,6 @@ class BasePage:
             self.driver.switch_to.window(tab_name)
         except:
             self.driver.switch_to.window(tab_name)
+
+    def refresh_window(self):
+        self.driver.refresh()

@@ -73,6 +73,7 @@ class BasePage:
             self.driver.switch_to.window(tab_name)
         except:
             self.driver.switch_to.window(tab_name)
+        # self.driver.execute_script("document.body.style.zoom = '0.75'")
 
     def refresh_window(self):
         self.driver.refresh()

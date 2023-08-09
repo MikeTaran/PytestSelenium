@@ -19,6 +19,7 @@ class FormsPage(BasePage):
         person_info = next(generated_person())
         first_name = person_info.firstname
         last_name = person_info.lastname
+        full_name = f'{first_name} {last_name}'
         email = person_info.email
         mobile = person_info.phone_10
         current_address = person_info.current_address
@@ -29,6 +30,7 @@ class FormsPage(BasePage):
         self.element_is_visible(self.locators.MOBILE).send_keys(mobile)
         self.element_is_visible(self.locators.CURRENT_ADDRESS).send_keys(current_address)
         submit_btn = self.find_element(self.locators.SUBMIT_BUTTON)
+        return full_name, email, mobile, current_address
 
     def fill_gender_radiobutton(self):
         gender_list = self.elements_are_present(self.locators.GENDER_LIST)
@@ -66,3 +68,26 @@ class FormsPage(BasePage):
         name = file_name.split('\\')[-1]
         # message = uploaded_message.split('\\')[-1]
         return name
+
+    def fill_subject_field(self):
+        self.element_is_visible(self.locators.SUBJECT).send_keys('English')
+
+    def fill_state_and_city_fields(self):
+        pass
+
+    def submit_input(self):
+        self.element_is_clickable(self.locators.SUBMIT_BUTTON).click()
+
+    def check_submitted_form_present(self):
+        try:
+            self.element_is_visible(self.locators.SUBMITTED_FORM)
+            return True
+        except:
+            return False
+
+    def get_submitted_data(self):
+        data = []
+        data_list = self.elements_are_present(self.locators.SUBMITTED_FORM_DATA)
+        for item in data_list:
+            data.append(item.text)
+        return data

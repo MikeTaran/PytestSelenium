@@ -9,7 +9,7 @@ class FormPageLocators:
     GENDER_LIST = (By.CSS_SELECTOR, 'div[class*="custom-radio"] label')
     MOBILE = (By.CSS_SELECTOR, 'input[id="userNumber"]')
     DATE_OF_BIRTH = (By.CSS_SELECTOR, 'input[id="dateOfBirthInput"]')
-    SUBJECT = (By.CSS_SELECTOR, 'div[id="subjectsContainer"]')
+    SUBJECT = (By.CSS_SELECTOR, 'input[id="subjectsInput"]')
     HOBBIES_LIST = (By.CSS_SELECTOR, 'div[class*="custom-checkbox"] label')
     UPLOAD_FILE_BUTTON = (By.CSS_SELECTOR, 'input[id="uploadPicture"]')
     CURRENT_ADDRESS = (By.CSS_SELECTOR, 'textarea[id="currentAddress"]')
@@ -18,5 +18,6 @@ class FormPageLocators:
     SUBMIT_BUTTON = (By.CSS_SELECTOR, 'button[id="submit"]')
 
     # created form fields
-    SUBMITTED_FORM_DATA = (By.CSS_SELECTOR, 'div[class="table-responsive"] table tr>td')
+    SUBMITTED_FORM = (By.CSS_SELECTOR, 'div[class="modal-content"]')
+    SUBMITTED_FORM_DATA = (By.CSS_SELECTOR, 'tbody tr td:nth-child(2)')
     CLOSE_BUTTON = (By.CSS_SELECTOR, 'button[id="closeLargeModal"]')

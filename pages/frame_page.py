@@ -7,8 +7,13 @@ from pages.base_page import BasePage
 class WindowsTabPage(BasePage):
     locators = WindowsTabPageLocators()
 
-    def windows_new_tab(self):
-        self.element_is_visible(self.locators.NEW_TAB_BUTTON).click()
+    def windows_new_tab(self, method):
+        available_cases = {
+            'tab': self.locators.NEW_TAB_BUTTON,
+            'window': self.locators.NEW_WINDOW_BUTTON
+        }
+        self.element_is_visible(available_cases[method]).click()
+        number_of_tabs = len(self.driver.window_handles)
         new_tab = self.driver.window_handles[1]
         self.driver.switch_to.window(new_tab)
         new_tab = self.element_is_visible(self.locators.NEW_TAB_TEXT)
@@ -20,4 +25,4 @@ class WindowsTabPage(BasePage):
         self.driver.switch_to.window(core_tab)
         self.element_is_visible(self.locators.NEW_TAB_BUTTON)
         core_tab_url = self.driver.current_url
-        return new_tab_text, text_id, core_tab_url, new_tab_url
+        return new_tab_text, text_id, core_tab_url, new_tab_url, number_of_tabs

@@ -1,10 +1,8 @@
 import os
 import random
-import time
 
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
-from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person, generated_file
 from locators.forms_page_locators import FormPageLocators
@@ -40,10 +38,12 @@ class FormsPage(BasePage):
     def fill_date_of_birth(self):
         person_info = next(generated_person())
         birthday = person_info.birthday
-        date_of_birth = self.element_is_visible(self.locators.DATE_OF_BIRTH)
-        date_of_birth.clear()
-        date_of_birth.send_keys(birthday)
-        date_of_birth.send_keys(Keys.RETURN)
+        date_of_birth_input = self.element_is_visible(self.locators.DATE_OF_BIRTH)
+        date_of_birth_input.click()
+        self.driver.execute_script("window.navigator.clipboard.writeText(arguments[0])", birthday)
+        date_of_birth_input.send_keys(Keys.CONTROL, 'a')
+        date_of_birth_input.send_keys(Keys.CONTROL, 'v')
+        date_of_birth_input.send_keys(Keys.RETURN)
         return birthday
 
     def fill_hobbies_checkboxes(self):
@@ -55,12 +55,7 @@ class FormsPage(BasePage):
         return f'{hobbies_txt[0]}, {hobbies_txt[rnd_i]}'
 
     def get_checked_hobbies_list(self):
-        checked_list = self.elements_are_present(self.locators.CHECKED_LIST)
-        checked_title_list = []
-        for box in checked_list:
-            title_item = box.find_element(By.XPATH, self.locators.TITLE_ITEM)
-            checked_title_list.append(title_item.text)
-        return str(checked_title_list).replace(' ', '').replace('.doc', '').lower()
+        pass
 
     def upload_picture(self):
         file_name, path = generated_file('jpg')
@@ -75,7 +70,7 @@ class FormsPage(BasePage):
         input_field = (self.element_is_visible(self.locators.SUBJECT))
         sub = ["English", "Maths", "Physics", "Chemistry", "Biology", "Computer Science", "Commerce",
                "Accounting", "Economics", "Arts", "Social Studies", "History", "Civics"]
-        subject = sub[random.randint(0, len(sub)-1)]
+        subject = sub[random.randint(0, len(sub) - 1)]
         input_field.send_keys(subject)
         input_field.send_keys(Keys.RETURN)
         return subject

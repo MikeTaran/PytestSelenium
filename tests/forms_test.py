@@ -7,7 +7,7 @@ url_forms = 'https://demoqa.com/automation-practice-form'
 class TestForms:
     class TestPracticeForm:
         @pytest.mark.test
-        def test_text_box(self, driver):
+        def test_practice_form(self, driver):
             forms_page = FormsPage(driver, url_forms)
             forms_page.open()
             full_name, email, mobile, current_address = forms_page.fill_static_fields()
@@ -26,12 +26,5 @@ class TestForms:
             submitted_data = forms_page.get_submitted_data()
             forms_page.check_close_button()
             assert forms_page.check_submitted_form_not_present(), 'The submitted form is present'
-            print('\n')
-            print(input_data)
-            print(submitted_data)
             for i in range(len(submitted_data)):
-                try:
-                    assert input_data[i] == submitted_data[i], f'InputData: {input_data[i]} is not match'
-                except AssertionError:
-                    print(f'InputData: {input_data[i]} is not match')
-
+                assert input_data[i] == submitted_data[i], f'InputData: {input_data[i]} is not match'

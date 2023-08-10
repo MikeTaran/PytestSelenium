@@ -39,5 +39,3 @@ class TestFrameAlertWindow:
             alerts_page.time_alert()
             alerts_page.confirm_alert()
             alerts_page.prompt_alert()
-
-

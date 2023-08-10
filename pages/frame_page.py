@@ -1,5 +1,3 @@
-import time
-
 from generator.generator import generated_person
 from locators.frame_page_locators import WindowsTabPageLocators, AlertsPageLocators
 from pages.base_page import BasePage
@@ -76,4 +74,3 @@ class AlertsPage(BasePage):
         alert.accept()
         confirm_text = self.element_is_visible(self.locators.PROMPT_ALERT_RESULT).text
         print(alert_text, confirm_text, first_name)
-

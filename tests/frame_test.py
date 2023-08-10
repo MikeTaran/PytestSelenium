@@ -1,5 +1,5 @@
 import pytest
-from pages.frame_page import WindowsTabPage
+from pages.frame_page import WindowsTabPage, AlertsPage
 
 url_windows = 'https://demoqa.com/browser-windows'
 url_alerts = 'https://demoqa.com/alerts'
@@ -30,3 +30,14 @@ class TestFrameAlertWindow:
             assert core_tab_url == url_windows, 'The main windows was Not open'
             assert 'sample' in new_tab_url, 'The URL new windows is Not correct'
             assert number_of_tabs == 2, 'It was opened more or less one windows'
+
+    class TestAlerts:
+        def test_alerts(self, driver):
+            alerts_page = AlertsPage(driver, url_alerts)
+            alerts_page.open()
+            alerts_page.simple_alert()
+            alerts_page.time_alert()
+            alerts_page.confirm_alert()
+            alerts_page.prompt_alert()
+
+

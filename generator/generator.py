@@ -1,5 +1,6 @@
 import os
 import random
+import calendar
 
 from data.data import Person
 from faker import Faker
@@ -36,8 +37,10 @@ def generate_random_date():
         day = random.randint(1, 30)
     # Генерация случайного года (от 1900 до 2099, например)
     year = random.randint(1950, 2000)
+    # Получение названия месяца
+    month_name = calendar.month_name[month]
     # Формирование даты в нужном формате
-    date = f"{month:02d}/{day:02d}/{year}"
+    date = f"{day:02d} {month_name},{year}"
     return date
 
 

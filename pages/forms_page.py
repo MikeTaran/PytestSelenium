@@ -1,10 +1,9 @@
-import base64
 import os
 import random
 import time
 
-import requests
 from selenium.common import TimeoutException
+from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person, generated_file
@@ -29,7 +28,6 @@ class FormsPage(BasePage):
         self.element_is_visible(self.locators.EMAIL).send_keys(email)
         self.element_is_visible(self.locators.MOBILE).send_keys(mobile)
         self.element_is_visible(self.locators.CURRENT_ADDRESS).send_keys(current_address)
-        submit_btn = self.find_element(self.locators.SUBMIT_BUTTON)
         return full_name, email, mobile, current_address
 
     def fill_gender_radiobutton(self):
@@ -45,12 +43,16 @@ class FormsPage(BasePage):
         date_of_birth = self.element_is_visible(self.locators.DATE_OF_BIRTH)
         date_of_birth.clear()
         date_of_birth.send_keys(birthday)
-        self.element_is_visible(self.locators.SUBJECT).click()
+        date_of_birth.send_keys(Keys.RETURN)
+        return birthday
 
     def fill_hobbies_checkboxes(self):
+        hobbies_txt = ['Sports', 'Reading', 'Music']
         hobbies_list = self.elements_are_visible(self.locators.HOBBIES_LIST)
-        for _ in range(10):
-            hobbies_list[random.randint(0, 2)].click()
+        rnd_i = random.randint(1, 2)
+        hobbies_list[0].click()
+        hobbies_list[rnd_i].click()
+        return f'{hobbies_txt[0]}, {hobbies_txt[rnd_i]}'
 
     def get_checked_hobbies_list(self):
         checked_list = self.elements_are_present(self.locators.CHECKED_LIST)
@@ -70,19 +72,43 @@ class FormsPage(BasePage):
         return name
 
     def fill_subject_field(self):
-        self.element_is_visible(self.locators.SUBJECT).send_keys('English')
+        input_field = (self.element_is_visible(self.locators.SUBJECT))
+        sub = ["English", "Maths", "Physics", "Chemistry", "Biology", "Computer Science", "Commerce",
+               "Accounting", "Economics", "Arts", "Social Studies", "History", "Civics"]
+        subject = sub[random.randint(0, len(sub)-1)]
+        input_field.send_keys(subject)
+        input_field.send_keys(Keys.RETURN)
+        return subject
 
     def fill_state_and_city_fields(self):
-        pass
+        state = 'NCR'
+        city = 'Noida'
+        self.element_is_visible(self.locators.STATE_SELECT).click()
+        self.element_is_visible(self.locators.STATE_INPUT).send_keys(state)
+        self.element_is_visible(self.locators.STATE_INPUT).send_keys(Keys.RETURN)
+        self.element_is_visible(self.locators.CITY_SELECT).click()
+        self.element_is_visible(self.locators.CITY_INPUT).send_keys(city)
+        self.element_is_visible(self.locators.CITY_INPUT).send_keys(Keys.RETURN)
+        return f'{state} {city}'
 
-    def submit_input(self):
+    def check_submit_button(self):
         self.element_is_clickable(self.locators.SUBMIT_BUTTON).click()
+
+    def check_close_button(self):
+        self.element_is_clickable(self.locators.CLOSE_BUTTON).click()
 
     def check_submitted_form_present(self):
         try:
             self.element_is_visible(self.locators.SUBMITTED_FORM)
             return True
-        except:
+        except TimeoutException:
+            return False
+
+    def check_submitted_form_not_present(self):
+        try:
+            self.element_is_not_visible(self.locators.SUBMITTED_FORM)
+            return True
+        except TimeoutException:
             return False
 
     def get_submitted_data(self):

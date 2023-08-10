@@ -276,7 +276,6 @@ class DynamicPropsPage(BasePage):
         text_id_2 = text.get_attribute('id')
         return text_id_1, text_id_2
 
-
     def enable_button(self):
         try:
             return self.element_is_clickable(self.locators.ENABLE_ALERT_BUTTON)

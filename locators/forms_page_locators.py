@@ -13,8 +13,10 @@ class FormPageLocators:
     HOBBIES_LIST = (By.CSS_SELECTOR, 'div[class*="custom-checkbox"] label')
     UPLOAD_FILE_BUTTON = (By.CSS_SELECTOR, 'input[id="uploadPicture"]')
     CURRENT_ADDRESS = (By.CSS_SELECTOR, 'textarea[id="currentAddress"]')
-    STATE = (By.CSS_SELECTOR, 'div[id="state"]')
-    CITY = (By.CSS_SELECTOR, 'div[id="city"]')
+    STATE_SELECT = (By.CSS_SELECTOR, 'div[id="state"]')
+    STATE_INPUT = (By.CSS_SELECTOR, 'input[id="react-select-3-input"]')
+    CITY_SELECT = (By.CSS_SELECTOR, 'div[id="city"]')
+    CITY_INPUT = (By.CSS_SELECTOR, 'input[id="react-select-4-input"]')
     SUBMIT_BUTTON = (By.CSS_SELECTOR, 'button[id="submit"]')
 
     # created form fields

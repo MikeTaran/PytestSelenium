@@ -11,7 +11,7 @@ url_modal = 'https://demoqa.com/modal-dialogs'
 class TestFrameAlertWindow:
     class TestWindowsTab:
         @pytest.mark.test
-        def test_windows_tab(self, driver):
+        def test_windows_new_tab(self, driver):
             windows_page = WindowsTabPage(driver, url_windows)
             windows_page.open()
             new_tab_text, text_id, core_tab_url, new_tab_url = windows_page.windows_new_tab()
@@ -21,5 +21,9 @@ class TestFrameAlertWindow:
             assert 'sample' in new_tab_url, 'The URL new tab is Not correct'
 
         def test_new_window(self, driver):
+            windows_page = WindowsTabPage(driver, url_windows)
+            windows_page.open()
+
+        def test_new_window_message(self, driver):
             windows_page = WindowsTabPage(driver, url_windows)
             windows_page.open()

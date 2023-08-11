@@ -1,5 +1,5 @@
 import pytest
-from pages.frame_page import WindowsTabPage, AlertsPage, IframesPage
+from pages.frame_page import (WindowsTabPage, AlertsPage, IframesPage, NestedFramePage)
 
 url_windows = 'https://demoqa.com/browser-windows'
 url_alerts = 'https://demoqa.com/alerts'
@@ -65,3 +65,13 @@ class TestFrameAlertWindow:
             result2 = iframes_page.check_iframe('frame2')
             assert result1 == ['500px', '350px', 'This is a sample page'], 'The frame is Not exist'
             assert result2 == ['100px', '100px', 'This is a sample page'], 'The frame is Not exist'
+
+    class TestNestedFrames:
+        def test_nested_frames(self, driver):
+            nested_frame_page = NestedFramePage(driver, url_nested_iframes)
+            nested_frame_page.open()
+            iframe_parent_text, iframe_child_text, iframe_parent_text_return, main_page_text_return = nested_frame_page.check_nested_frames()
+            assert iframe_parent_text == 'Parent frame', ''
+            assert iframe_child_text == 'Child Iframe', ''
+            assert iframe_parent_text_return == 'Parent frame', ''
+            assert 'Sample Nested Iframe page.' in main_page_text_return, ''

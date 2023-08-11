@@ -1,5 +1,6 @@
 from generator.generator import generated_person
-from locators.frame_page_locators import WindowsTabPageLocators, AlertsPageLocators, IframesPageLocators
+from locators.frame_page_locators import WindowsTabPageLocators, AlertsPageLocators, IframesPageLocators, \
+    NestedFramePageLocators
 from pages.base_page import BasePage
 
 
@@ -88,3 +89,21 @@ class IframesPage(BasePage):
         iframe_text = self.element_is_visible(self.locators.IFRAME_TEXT).text
         self.driver.switch_to.default_content()
         return [width, height, iframe_text]
+
+
+class NestedFramePage(BasePage):
+    locators = NestedFramePageLocators()
+
+    def check_nested_frames(self):
+        # iframe_parent = self.element_is_visible(self.locators.IFRAME_PARENT)
+        self.driver.switch_to.frame(1)
+        # iframe_child = self.element_is_visible(self.locators.IFRAME_CHILD)
+        iframe_parent_text = self.element_is_visible(self.locators.IFRAME_PARENT_TEXT).text
+        self.driver.switch_to.frame(0)
+        iframe_child_text = self.element_is_visible(self.locators.IFRAME_CHILD_TEXT).text
+        self.driver.switch_to.parent_frame()
+        iframe_parent_text1 = self.element_is_visible(self.locators.IFRAME_PARENT_TEXT).text
+        self.driver.switch_to.default_content()
+        main_page_text = self.element_is_visible(self.locators.MAIN_PAGE_TEXT).text
+
+        return iframe_parent_text, iframe_child_text, iframe_parent_text1, main_page_text

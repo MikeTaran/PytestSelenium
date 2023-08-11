@@ -49,6 +49,10 @@ class BasePage:
             "return arguments[0].scrollIntoView(true);", element)
 
     # browser.execute_script("return arguments[0].scrollIntoView(true);", button)
+    def alert_is_present(self, timeout=5):
+        wait = WebDriverWait(self.driver, timeout)
+        alert = wait.until(EC.alert_is_present(), message=f"Can't find alert")
+        return alert
 
     def action_double_click(self, element):
         action = ActionChains(self.driver)

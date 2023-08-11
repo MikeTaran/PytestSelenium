@@ -36,7 +36,7 @@ class AlertsPage(BasePage):
         alert = self.driver.switch_to.alert
         alert_text = alert.text
         alert.accept()
-        print(alert_text)
+        return alert_text
 
     def time_alert(self):
         self.element_is_visible(self.locators.TIME_ALERT_BUTTON).click()
@@ -44,24 +44,21 @@ class AlertsPage(BasePage):
         alert = self.driver.switch_to.alert
         alert_text = alert.text
         alert.accept()
-        print(alert_text)
+        return alert_text
 
     def confirm_alert(self):
         self.element_is_visible(self.locators.CONFIRM_ALERT_BUTTON).click()
         self.alert_is_present()
         alert = self.driver.switch_to.alert
-        alert_text = alert.text
         alert.accept()
         confirm_text = self.element_is_visible(self.locators.CONFIRM_ALERT_RESULT).text
-        print(alert_text, confirm_text)
         #
         self.element_is_visible(self.locators.CONFIRM_ALERT_BUTTON).click()
         self.alert_is_present()
         alert = self.driver.switch_to.alert
-        alert_text = alert.text
         alert.dismiss()
-        confirm_text = self.element_is_visible(self.locators.CONFIRM_ALERT_RESULT).text
-        print(alert_text, confirm_text)
+        dismiss_text = self.element_is_visible(self.locators.CONFIRM_ALERT_RESULT).text
+        return confirm_text, dismiss_text
 
     def prompt_alert(self):
         person_info = next(generated_person())
@@ -69,8 +66,7 @@ class AlertsPage(BasePage):
         self.element_is_visible(self.locators.PROMPT_ALERT_BUTTON).click()
         self.alert_is_present()
         alert = self.driver.switch_to.alert
-        alert_text = alert.text
         alert.send_keys(first_name)
         alert.accept()
         confirm_text = self.element_is_visible(self.locators.PROMPT_ALERT_RESULT).text
-        print(alert_text, confirm_text, first_name)
+        return confirm_text, first_name

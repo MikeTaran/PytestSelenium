@@ -1,10 +1,10 @@
 import pytest
-from pages.frame_page import WindowsTabPage, AlertsPage
+from pages.frame_page import WindowsTabPage, AlertsPage, IframesPage
 
 url_windows = 'https://demoqa.com/browser-windows'
 url_alerts = 'https://demoqa.com/alerts'
-url_frames = 'https://demoqa.com/frames'
-url_nested_frames = 'https://demoqa.com/nestedframes'
+url_iframes = 'https://demoqa.com/frames'
+url_nested_iframes = 'https://demoqa.com/nestedframes'
 url_modal = 'https://demoqa.com/modal-dialogs'
 
 
@@ -56,3 +56,12 @@ class TestFrameAlertWindow:
             alerts_page.open()
             confirm_text, first_name = alerts_page.prompt_alert()
             assert first_name in confirm_text, 'The confirm text is Not correct'
+
+    class TestIframes:
+        def test_iframes(self, driver):
+            iframes_page = IframesPage(driver, url_iframes)
+            iframes_page.open()
+            result1 = iframes_page.check_iframe('frame1')
+            result2 = iframes_page.check_iframe('frame2')
+            assert result1 == ['500px', '350px', 'This is a sample page'], 'The frame is Not exist'
+            assert result2 == ['100px', '100px', 'This is a sample page'], 'The frame is Not exist'

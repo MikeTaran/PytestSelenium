@@ -1,5 +1,5 @@
 from generator.generator import generated_person
-from locators.frame_page_locators import WindowsTabPageLocators, AlertsPageLocators
+from locators.frame_page_locators import WindowsTabPageLocators, AlertsPageLocators, IframesPageLocators
 from pages.base_page import BasePage
 
 
@@ -70,3 +70,21 @@ class AlertsPage(BasePage):
         alert.accept()
         confirm_text = self.element_is_visible(self.locators.PROMPT_ALERT_RESULT).text
         return confirm_text, first_name
+
+
+class IframesPage(BasePage):
+    locators = IframesPageLocators()
+
+    def check_iframe(self, num_frame):
+        locator = ''
+        if num_frame == 'frame1':
+            locator = self.locators.IFRAME_1
+        if num_frame == 'frame2':
+            locator = self.locators.IFRAME_2
+        iframe = self.element_is_visible(locator)
+        width = iframe.get_attribute('width')
+        height = iframe.get_attribute('height')
+        self.driver.switch_to.frame(iframe)
+        iframe_text = self.element_is_visible(self.locators.IFRAME_TEXT).text
+        self.driver.switch_to.default_content()
+        return [width, height, iframe_text]

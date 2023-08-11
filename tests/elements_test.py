@@ -2,7 +2,7 @@ import random
 
 import pytest
 from pages.elements_page import TextBoxPage, CheckBoxPage, RadioButtonPage, WebTablePage, ButtonsPage, LinksPage, \
-    DownUploadPage, DynamicPropsPage
+    DownUploadPage, DynamicPropsPage, BrokenLinksPage
 
 url_textbox = 'https://demoqa.com/text-box'
 url_checkbox = 'https://demoqa.com/checkbox'
@@ -12,6 +12,7 @@ url_buttons = 'https://demoqa.com/buttons'
 url_links = 'https://demoqa.com/links'
 url_down_upload = 'https://demoqa.com/upload-download'
 url_dynamic = 'https://demoqa.com/dynamic-properties'
+url_broken = 'https://demoqa.com/broken'
 
 
 class TestElements:
@@ -172,3 +173,16 @@ class TestElements:
             dynamic_page.open()
             appeared = dynamic_page.visible_button()
             assert appeared, 'The alert is not appeared'
+
+    class TestBrokenlinksImages:
+        @pytest.mark.xfail
+        def test_broken_images(self, driver):
+            broken_page = BrokenLinksPage(driver, url_broken)
+            broken_page.open()
+            broken_page.check_image()
+
+        @pytest.mark.xfail
+        def test_broken_link(self, driver):
+            broken_page = BrokenLinksPage(driver, url_broken)
+            broken_page.open()
+            broken_page.check_link()

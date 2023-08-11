@@ -86,3 +86,12 @@ class DynamicPropsPageLocators:
     ENABLE_ALERT_BUTTON = (By.CSS_SELECTOR, 'button[id="enableAfter"]')
     COLOR_CHANGE_BUTTON = (By.CSS_SELECTOR, 'button[id="colorChange"]')
     VISIBLE_ALERT_BUTTON = (By.CSS_SELECTOR, 'button[id="visibleAfter"]')
+
+
+class BrokenLinksPageLocators:
+    VALID_IMAGE = (By.CSS_SELECTOR, 'img[src="/images/Toolsqa.jpg"]')
+    BROKEN_IMAGE = (By.CSS_SELECTOR, 'img[src="/images/Toolsqa_1.jpg"]')
+    VALID_LINK = (By.CSS_SELECTOR, 'a[href="http://demoqa.com"]')
+    BROKEN_LINK = (By.CSS_SELECTOR, 'a[href="http://the-internet.herokuapp.com/status_codes/500"]')
+    IMAGES_LIST = (By.CSS_SELECTOR, 'div[class="col-12 mt-4 col-md-6"] img')
+    LINK_LIST = (By.CSS_SELECTOR, 'div[class="col-12 mt-4 col-md-6"] a')

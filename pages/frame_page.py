@@ -1,6 +1,6 @@
 from generator.generator import generated_person
 from locators.frame_page_locators import WindowsTabPageLocators, AlertsPageLocators, IframesPageLocators, \
-    NestedFramePageLocators
+    NestedFramePageLocators, ModalDialogPageLocators
 from pages.base_page import BasePage
 
 
@@ -107,3 +107,7 @@ class NestedFramePage(BasePage):
         main_page_text = self.element_is_visible(self.locators.MAIN_PAGE_TEXT).text
 
         return iframe_parent_text, iframe_child_text, iframe_parent_text1, main_page_text
+
+
+class ModalDialogPage(BasePage):
+    locators = ModalDialogPageLocators()

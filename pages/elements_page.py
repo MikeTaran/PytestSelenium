@@ -9,7 +9,8 @@ from selenium.webdriver.common.by import By
 
 from generator.generator import generated_person, generated_file
 from locators.element_page_locators import TextBoxPageLocators, CheckBoxPageLocators, RadioButtonPageLocators, \
-    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, DownUploadPageLocators, DynamicPropsPageLocators
+    WebTablePageLocators, ButtonsPageLocators, LinksPageLocators, DownUploadPageLocators, DynamicPropsPageLocators, \
+    BrokenLinksPageLocators
 from pages.base_page import BasePage
 
 
@@ -294,3 +295,26 @@ class DynamicPropsPage(BasePage):
             return self.element_is_visible(self.locators.VISIBLE_ALERT_BUTTON)
         except TimeoutException:
             return False
+
+
+class BrokenLinksPage(BasePage):
+    locators = BrokenLinksPageLocators()
+
+    def check_link(self):
+        links = self.find_elements(self.locators.LINK_LIST)
+        for link in links:
+            href = link.get_attribute('href')
+            if not href:
+                continue
+            response = requests.head(href)
+            assert response.status_code < 400, f"Broken link: {href}, {response}"
+
+    def check_image(self):
+        images = self.find_elements(self.locators.IMAGES_LIST)
+        for img in images:
+            src = img.get_attribute("src")
+            if not src:
+                print(f'The img{img} has No src attribute')
+                continue
+            natural_width = self.driver.execute_script("return arguments[0].naturalWidth;", img)
+            assert natural_width != 0, f"Broken image: {src}"

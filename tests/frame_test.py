@@ -1,5 +1,5 @@
 import pytest
-from pages.frame_page import (WindowsTabPage, AlertsPage, IframesPage, NestedFramePage)
+from pages.frame_page import (WindowsTabPage, AlertsPage, IframesPage, NestedFramePage, ModalDialogPage)
 
 url_windows = 'https://demoqa.com/browser-windows'
 url_alerts = 'https://demoqa.com/alerts'
@@ -70,8 +70,14 @@ class TestFrameAlertWindow:
         def test_nested_frames(self, driver):
             nested_frame_page = NestedFramePage(driver, url_nested_iframes)
             nested_frame_page.open()
-            iframe_parent_text, iframe_child_text, iframe_parent_text_return, main_page_text_return = nested_frame_page.check_nested_frames()
-            assert iframe_parent_text == 'Parent frame', ''
-            assert iframe_child_text == 'Child Iframe', ''
-            assert iframe_parent_text_return == 'Parent frame', ''
-            assert 'Sample Nested Iframe page.' in main_page_text_return, ''
+            iframe_parent_text, iframe_child_text, iframe_parent_text_return, main_page_text = (nested_frame_page
+                                                                                                .check_nested_frames())
+            assert iframe_parent_text == 'Parent frame', 'The parent iframe was Not selected'
+            assert iframe_child_text == 'Child Iframe', 'The child iframe was Not selected'
+            assert iframe_parent_text_return == 'Parent frame', 'The parent iframe was Not selected after return'
+            assert 'Sample Nested Iframe page.' in main_page_text, 'The main page was Not selected after return'
+
+    class TestModalDialogs:
+        def test_modal_dialog(self, driver):
+            modal_dialog_page = ModalDialogPage(driver, url_modal)
+            modal_dialog_page.open()

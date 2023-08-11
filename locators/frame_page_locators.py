@@ -30,3 +30,7 @@ class NestedFramePageLocators:
     IFRAME_CHILD = (By.CSS_SELECTOR, 'iframe[srcdoc="<p>Child Iframe</p>"]')
     MAIN_PAGE_TEXT = (By.CSS_SELECTOR, 'div[id="framesWrapper"]')
 
+
+class ModalDialogPageLocators:
+    SMALL_MODAL_BUTTON = (By.CSS_SELECTOR, 'button[id="showSmallModal"]')
+    LARGE_MODAL_BUTTON = (By.CSS_SELECTOR, 'button[id="showLargeModal"]')

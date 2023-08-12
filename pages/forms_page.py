@@ -1,5 +1,6 @@
 import os
 import random
+import pyautogui
 
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
@@ -37,12 +38,16 @@ class FormsPage(BasePage):
 
     def fill_date_of_birth(self):
         person_info = next(generated_person())
+        core_tab = self.driver.window_handles[0]
         birthday = person_info.birthday
         date_of_birth_input = self.element_is_visible(self.locators.DATE_OF_BIRTH)
         date_of_birth_input.click()
         self.driver.execute_script("window.navigator.clipboard.writeText(arguments[0])", birthday)
         date_of_birth_input.send_keys(Keys.CONTROL, 'a')
         date_of_birth_input.send_keys(Keys.CONTROL, 'v')
+        # не работает в headless режиме - не видит локатор
+        self.driver.switch_to.window(core_tab)
+        date_of_birth_input = self.element_is_visible(self.locators.DATE_OF_BIRTH)
         date_of_birth_input.send_keys(Keys.RETURN)
         return birthday
 

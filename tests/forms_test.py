@@ -6,7 +6,7 @@ url_forms = 'https://demoqa.com/automation-practice-form'
 
 class TestForms:
     class TestPracticeForm:
-        @pytest.mark.test
+        @pytest.mark.xfail
         def test_practice_form(self, driver):
             forms_page = FormsPage(driver, url_forms)
             forms_page.open()

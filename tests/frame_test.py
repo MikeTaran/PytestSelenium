@@ -81,3 +81,8 @@ class TestFrameAlertWindow:
         def test_modal_dialog(self, driver):
             modal_dialog_page = ModalDialogPage(driver, url_modal)
             modal_dialog_page.open()
+            small_result = modal_dialog_page.check_small_modal_dialogs()
+            large_result = modal_dialog_page.check_large_modal_dialogs()
+            assert large_result[1] > small_result[1], 'The small modal is bigger large modal'
+            assert large_result[0] == 'Large Modal', 'The header is Not "Large Modal"'
+            assert small_result[0] == 'Small Modal', 'The header is Not "Small Modal"'

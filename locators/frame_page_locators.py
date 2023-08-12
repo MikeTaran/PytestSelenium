@@ -34,3 +34,9 @@ class NestedFramePageLocators:
 class ModalDialogPageLocators:
     SMALL_MODAL_BUTTON = (By.CSS_SELECTOR, 'button[id="showSmallModal"]')
     LARGE_MODAL_BUTTON = (By.CSS_SELECTOR, 'button[id="showLargeModal"]')
+    MODAL_TITLE = (By.CSS_SELECTOR, 'div[class="modal-title h4"]')
+    MODAL_CONTENT = (By.CSS_SELECTOR, 'div[class="modal-body"]')
+    SMALL_MODAL_CLOSE_BUTTON = (By.CSS_SELECTOR, 'button[id="closeSmallModal"]')
+    LARGE_MODAL_CLOSE_BUTTON = (By.CSS_SELECTOR, 'button[id="closeLargeModal"]')
+    MODAL_CLOSE_CROSS = (By.CSS_SELECTOR, 'button[class="close"]')
+    OVERLAY = (By.CSS_SELECTOR, 'div[role="dialog"]')

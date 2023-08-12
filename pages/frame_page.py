@@ -1,3 +1,5 @@
+from selenium.webdriver import ActionChains
+
 from generator.generator import generated_person
 from locators.frame_page_locators import WindowsTabPageLocators, AlertsPageLocators, IframesPageLocators, \
     NestedFramePageLocators, ModalDialogPageLocators
@@ -105,9 +107,48 @@ class NestedFramePage(BasePage):
         iframe_parent_text1 = self.element_is_visible(self.locators.IFRAME_PARENT_TEXT).text
         self.driver.switch_to.default_content()
         main_page_text = self.element_is_visible(self.locators.MAIN_PAGE_TEXT).text
-
         return iframe_parent_text, iframe_child_text, iframe_parent_text1, main_page_text
 
 
 class ModalDialogPage(BasePage):
     locators = ModalDialogPageLocators()
+
+    def check_small_modal_dialogs(self):
+        self.element_is_visible(self.locators.SMALL_MODAL_BUTTON).click()
+        title = self.element_is_visible(self.locators.MODAL_TITLE).text
+        self.element_is_visible(self.locators.SMALL_MODAL_CLOSE_BUTTON).click()
+        self.element_is_not_visible(self.locators.MODAL_TITLE)
+
+        self.element_is_visible(self.locators.SMALL_MODAL_BUTTON).click()
+        len_content = len(self.element_is_visible(self.locators.MODAL_CONTENT).text)
+        self.element_is_visible(self.locators.MODAL_CLOSE_CROSS).click()
+        self.element_is_not_visible(self.locators.MODAL_TITLE)
+
+        self.element_is_visible(self.locators.SMALL_MODAL_BUTTON).click()
+        self.element_is_present(self.locators.OVERLAY).click()
+        self.element_is_not_visible(self.locators.MODAL_TITLE)
+
+        return [title, len_content]
+
+    def check_large_modal_dialogs(self):
+        self.element_is_visible(self.locators.LARGE_MODAL_BUTTON).click()
+        title = self.element_is_visible(self.locators.MODAL_TITLE).text
+        self.element_is_visible(self.locators.LARGE_MODAL_CLOSE_BUTTON).click()
+        self.element_is_not_visible(self.locators.MODAL_TITLE)
+
+        self.element_is_visible(self.locators.LARGE_MODAL_BUTTON).click()
+        len_content = len(self.element_is_visible(self.locators.MODAL_CONTENT).text)
+        self.element_is_visible(self.locators.MODAL_CLOSE_CROSS).click()
+        self.element_is_not_visible(self.locators.MODAL_TITLE)
+        self.element_is_visible(self.locators.LARGE_MODAL_BUTTON).click()
+        action_chains = ActionChains(self.driver)
+
+        # Выполните клик по заданным координатам (x, y)
+        x_coordinate = 1000
+        y_coordinate = 600
+        action_chains.move_by_offset(x_coordinate, y_coordinate)
+        action_chains.click().perform()
+
+        self.element_is_not_visible(self.locators.MODAL_TITLE)
+
+        return [title, len_content]

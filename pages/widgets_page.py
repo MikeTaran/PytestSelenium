@@ -1,9 +1,14 @@
+import calendar
 import random
+from generator.generator import generate_random_date as rnd_date, convert_to_12_hour_format as conv_12h
+
+from selenium.webdriver.support.ui import Select
 
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
 
-from locators.widgets_page_locators import AccordianWidgetsPageLocators, AutoCompletePageLocators
+from locators.widgets_page_locators import AccordianWidgetsPageLocators, AutoCompletePageLocators, \
+    DatePickerPageLocators
 from pages.base_page import BasePage
 
 
@@ -68,7 +73,6 @@ class AutoCompletePage(BasePage):
         return len(result), len(result_list)
 
     def test_all_multy_deletion(self):
-
         self.check_multy_input(['a', 'b', 'q', 'w'])
         all_delete_cross = self.element_is_visible(self.locators.REMOVE_ALL_MULTY_ELEMENT)
         all_delete_cross.click()
@@ -77,3 +81,111 @@ class AutoCompletePage(BasePage):
             return True
         except TimeoutException:
             return False
+
+
+class DatePickerPage(BasePage):
+    locators = DatePickerPageLocators()
+
+    def check_only_date_picker_input_fulldate(self):
+        day, month, year, hour, minute = rnd_date()
+        input_date = f'{month:02d}/{day:02d}/{year}'
+
+        input_field = self.element_is_visible(self.locators.ONLY_DATE_INPUT)
+        input_field.click()
+        self.driver.execute_script("window.navigator.clipboard.writeText(arguments[0])", input_date)
+        input_field.send_keys(Keys.CONTROL, 'a')
+        input_field.send_keys(Keys.CONTROL, 'v')
+        input_field.send_keys(Keys.RETURN)
+
+        output_date = input_field.get_attribute('value')
+
+        return input_date, output_date
+
+    def check_separate_data_input(self):
+        day, month, year, hour, minute = rnd_date()
+        input_date = f'{month:02d}/{day:02d}/{year}'
+        input_field = self.element_is_visible(self.locators.ONLY_DATE_INPUT)
+        input_field.click()
+        select_month = Select(self.find_element(self.locators.ONLY_DATE_MONTH_INPUT_SELECT))
+        select_month.select_by_value(str(month - 1))
+        select_year = Select(self.find_element(self.locators.ONLY_DATE_YEAR_INPUT_SELECT))
+        select_year.select_by_value(str(year))
+        day_list = self.elements_are_visible(self.locators.ONLY_DATE_DAY_INPUT_LIST)
+        for i in range(len(day_list) - 1):
+            if day_list[i].text == '1':
+                day_list[i + day - 1].click()
+                break
+        output_date = input_field.get_attribute('value')
+        return input_date, output_date
+
+    def check_date_and_time_input(self):
+        day, month, year, hour, minute = rnd_date()
+        month_name = calendar.month_name[month]
+        input_date = f"{month_name} {day}, {year} 4:00 PM"
+
+        input_field = self.element_is_visible(self.locators.DATE_TIME_INPUT)
+        input_field.click()
+        self.driver.execute_script("window.navigator.clipboard.writeText(arguments[0])", input_date)
+        input_field.send_keys(Keys.CONTROL, 'a')
+        input_field.send_keys(Keys.CONTROL, 'v')
+        input_field.send_keys(Keys.RETURN)
+
+        output_date = input_field.get_attribute('value')
+        return input_date, output_date
+
+    def check_date_and_time_separate_input(self):
+        day, month, year, hour, minute = rnd_date()
+        month_name = calendar.month_name[month]
+        input_time = f'{hour:02d}:{minute:02d}'
+        convert_time = conv_12h(input_time)
+        input_date = f"{month_name} {day}, {year} {convert_time}"
+
+        input_field = self.element_is_visible(self.locators.DATE_TIME_INPUT)
+        input_field.click()
+
+        self.element_is_visible(self.locators.DATE_TIME_MONTH_INPUT).click()
+        month_list = self.elements_are_visible(self.locators.DATE_TIME_MONTH_INPUT_LIST)
+        month_list[month - 1].click()
+
+        self.element_is_visible(self.locators.DATE_TIME_YEAR_INPUT).click()
+        year_list = self.elements_are_present(self.locators.DATE_TIME_YEAR_INPUT_LIST)
+        nav_arrow_list = self.elements_are_visible(self.locators.DATE_TIME_YEAR_NAVIGATION_ARROW)
+        nav_arrow_up = nav_arrow_list[0]
+        nav_arrow_down = nav_arrow_list[1]
+        first_year = int(year_list[1].text)
+        last_year = int(year_list[-2].text)
+
+        if last_year <= year <= first_year:
+            for new_year in year_list:
+                if new_year.text == str(year):
+                    new_year.click()
+                    break
+
+        if year > first_year:
+            while year != first_year:
+                nav_arrow_up.click()
+                year_list = self.elements_are_present(self.locators.DATE_TIME_YEAR_INPUT_LIST)
+                first_year = int(year_list[1].text)
+            year_list[0].click()
+
+        if year < last_year:
+            while year != last_year:
+                nav_arrow_down.click()
+                year_list = self.elements_are_present(self.locators.DATE_TIME_YEAR_INPUT_LIST)
+                last_year = int(year_list[-2].text)
+            year_list[-2].click()
+
+        day_list = self.elements_are_visible(self.locators.ONLY_DATE_DAY_INPUT_LIST)
+        for i in range(len(day_list)):
+            if day_list[i].text == '1':
+                day_list[i + day - 1].click()
+                break
+
+        time_list = self.elements_are_present(self.locators.DATE_TIME_TIME_INPUT_LIST)
+        for new_time in time_list:
+            if new_time.text == input_time:
+                new_time.click()
+                break
+        #
+        output_date = input_field.get_attribute('value')
+        return input_date, output_date

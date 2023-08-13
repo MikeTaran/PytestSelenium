@@ -40,8 +40,10 @@ def generate_random_date():
     # Получение названия месяца
     month_name = calendar.month_name[month]
     # Формирование даты в нужном формате
-    date = f"{day:02d} {month_name},{year}"
-    return date
+    # date = f"{day:02d} {month_name},{year}"
+    hour = random.randint(0, 24)
+    minute = (random.sample([0, 15, 30, 45], k=1))
+    return day, month, year, hour, *minute
 
 
 def generated_file(desc='txt'):
@@ -53,3 +55,30 @@ def generated_file(desc='txt'):
         my_file.write(f"Hello world_{random.randint(0, 777)}")
     my_file.close()
     return my_file.name, file_path
+
+def convert_to_12_hour_format(time_24h):
+    # Преобразование времени из 24-часового формата в 12-часовой формат
+    hour, minute = map(int, time_24h.split(":"))
+
+    if hour == 0:
+        return f"12:{minute:02d} AM"
+    elif 1 <= hour <= 11:
+        return f"{hour}:{minute:02d} AM"
+    elif hour == 12:
+        return f"12:{minute:02d} PM"
+    else:
+        return f"{hour - 12}:{minute:02d} PM"
+
+
+def convert_to_24_hour_format(time_12h):
+    # Преобразование времени из 12-часового формата в 24-часовой формат
+    time_parts = time_12h.split()
+    hour, minute = map(int, time_parts[0].split(":"))
+
+    if time_parts[1].upper() == "AM":
+        if hour == 12:
+            hour = 0
+    elif time_parts[1].upper() == "PM":
+        if hour != 12:
+            hour += 12
+    return f"{hour:02d}:{minute:02d}"

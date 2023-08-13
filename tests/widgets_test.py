@@ -1,6 +1,7 @@
 import random
 
-from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage
+
+from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage, DatePickerPage
 
 url_accordian = 'https://demoqa.com/accordian'
 url_autocomplete = 'https://demoqa.com/auto-complete'
@@ -59,3 +60,29 @@ class TestWidgets:
             autocomplete_page.open()
             result_list = autocomplete_page.test_all_multy_deletion()
             assert result_list, 'Not all colors were deleted'
+
+    class TestDatePicker:
+
+        def test_only_full_date_picker(self, driver):
+            date_picker_page = DatePickerPage(driver, url_date)
+            date_picker_page.open()
+            input_date, output_date = date_picker_page.check_only_date_picker_input_fulldate()
+            assert input_date == output_date, ''
+
+        def test_only_separate_data_picker(self, driver):
+            date_picker_page = DatePickerPage(driver, url_date)
+            date_picker_page.open()
+            input_date, output_date = date_picker_page.check_separate_data_input()
+            assert input_date == output_date, ''
+
+        def test_date_and_time_picker(self, driver):
+            date_picker_page = DatePickerPage(driver, url_date)
+            date_picker_page.open()
+            input_date, output_date = date_picker_page.check_date_and_time_input()
+            assert input_date == output_date, ''
+
+        def test_date_time_separate_input_picker(self, driver):
+            date_picker_page = DatePickerPage(driver, url_date)
+            date_picker_page.open()
+            input_date, output_date = date_picker_page.check_date_and_time_separate_input()
+            assert input_date == output_date, ''

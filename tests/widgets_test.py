@@ -1,6 +1,16 @@
-from pages.widgets_page import AccordianWidgetsPage
+import random
+
+from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage
 
 url_accordian = 'https://demoqa.com/accordian'
+url_autocomplete = 'https://demoqa.com/auto-complete'
+url_date = 'https://demoqa.com/date-picker'
+url_slider = 'https://demoqa.com/slider'
+url_bar = 'https://demoqa.com/progress-bar'
+url_tabs = 'https://demoqa.com/tabs'
+url_tooltips = 'https://demoqa.com/tool-tips'
+url_menu = 'https://demoqa.com/menu'
+url_select_menu = 'https://demoqa.com/select-menu'
 
 
 class TestWidgets:
@@ -15,3 +25,37 @@ class TestWidgets:
                 assert title[i] == title_mockup[i], f'The title of block_{i} is Not correct'
             assert accord, 'More than one block was opened'
 
+    class TestAutoComplete:
+        input_letter = 'qwertyuiopadghklcvbnm'
+        color_data = ["Aqua", "Magenta", "Indigo", "Voilet", "White", "White", "Black", "Purple",
+                      "Yellow", "Green", "Blue", "Red"]
+
+        def test_multy_autocomplete(self, driver):
+            autocomplete_page = AutoCompletePage(driver, url_autocomplete)
+            autocomplete_page.open()
+            num = random.randint(1, 10)
+            lst_letters = random.sample(self.input_letter, k=num)
+            #
+            data = autocomplete_page.check_multy_input(lst_letters)
+            for color in data:
+                assert color in self.color_data, f'The color: {color} is Not in colors list'
+
+        def test_single_autocomplete(self, driver):
+            autocomplete_page = AutoCompletePage(driver, url_autocomplete)
+            autocomplete_page.open()
+            rnd_letter = random.sample(self.input_letter, k=1)
+            # rnd_letter = self.input_letter[random.randint(0, len(self.input_letter) - 1)]
+            color = autocomplete_page.check_single_input(*rnd_letter)
+            assert color in self.color_data, f'The color: {color} is Not in colors list'
+
+        def test_multy_element_deletion(self, driver):
+            autocomplete_page = AutoCompletePage(driver, url_autocomplete)
+            autocomplete_page.open()
+            input_list, output_list = autocomplete_page.check_multy_element_deletion()
+            assert input_list - output_list == 1, 'It was deleted more or less one items'
+
+        def test_all_multy_deletion(self, driver):
+            autocomplete_page = AutoCompletePage(driver, url_autocomplete)
+            autocomplete_page.open()
+            result_list = autocomplete_page.test_all_multy_deletion()
+            assert result_list, 'Not all colors were deleted'

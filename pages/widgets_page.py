@@ -1,5 +1,7 @@
 import calendar
 import random
+import time
+
 from generator.generator import generate_random_date as rnd_date, convert_to_12_hour_format as conv_12h
 
 from selenium.webdriver.support.ui import Select
@@ -26,9 +28,11 @@ class AccordianWidgetsPage(BasePage):
 
             title_data.append(title_list[i].text)
             title_list[i].click()
+            time.sleep(0.2)
             content = len(content_list[i].text)
             if content == 0:
                 title_list[i].click()
+                time.sleep(0.2)
                 content = len(content_list[i].text)
             content_len_data.append(content)
             # проверка, что одновременно открыта только одна вкладка

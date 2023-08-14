@@ -13,4 +13,13 @@ class Person:
     current_address: str = None
     permanent_address: str = None
     phone_10: int = None
-    birthday: str = None
+    birthday: tuple = None
+
+
+@dataclass
+class Date:
+    day: int = None
+    month: int = None
+    year: int = None
+    hour: int = None
+    minute: int = None

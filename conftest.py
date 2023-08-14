@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.options import Options
 def driver():
     # Создание объекта опций для Chrome
     chrome_options = Options()
-    # chrome_options.add_argument('--headless')  # Включение режима headless
+    chrome_options.add_argument('--headless')  # Включение режима headless
     # Создание браузерного объекта
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
     driver.maximize_window()

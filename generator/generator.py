@@ -1,6 +1,6 @@
 import os
 import random
-import calendar
+# import calendar
 
 from data.data import Person
 from faker import Faker
@@ -38,7 +38,7 @@ def generate_random_date():
     # Генерация случайного года (от 1900 до 2099, например)
     year = random.randint(1950, 2000)
     # Получение названия месяца
-    month_name = calendar.month_name[month]
+    # month_name = calendar.month_name[month]
     # Формирование даты в нужном формате
     # date = f"{day:02d} {month_name},{year}"
     hour = random.randint(0, 24)
@@ -55,6 +55,7 @@ def generated_file(desc='txt'):
         my_file.write(f"Hello world_{random.randint(0, 777)}")
     my_file.close()
     return my_file.name, file_path
+
 
 def convert_to_12_hour_format(time_24h):
     # Преобразование времени из 24-часового формата в 12-часовой формат

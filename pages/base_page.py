@@ -65,6 +65,11 @@ class BasePage:
         action.context_click(element)
         action.perform()
 
+    def action_drag_and_drop_offset(self, element, x_coord, y_coord):
+        action = ActionChains(self.driver)
+        action.drag_and_drop_by_offset(element, x_coord, y_coord)
+        action.perform()
+
     # remove banners
     def remove_footer_and_banners(self):
         tab_name = self.driver.window_handles[0]

@@ -2,7 +2,7 @@ import random
 
 import pytest
 
-from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage, DatePickerPage
+from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage, DatePickerPage, SliderPage
 
 url_accordian = 'https://demoqa.com/accordian'
 url_autocomplete = 'https://demoqa.com/auto-complete'
@@ -87,5 +87,13 @@ class TestWidgets:
         def test_date_time_separate_input_picker(self, driver):
             date_picker_page = DatePickerPage(driver, url_date)
             date_picker_page.open()
-            input_date, output_date = date_picker_page.check_date_and_time_separate_input()
-            assert input_date == output_date, ''
+            start_date, input_date, output_date = date_picker_page.check_date_and_time_separate_input()
+            assert start_date != input_date == output_date, ''
+
+    class TestSlider:
+        def test_slider(self, driver):
+            slider_page = SliderPage(driver, url_slider)
+            slider_page.open()
+            slider_page.check_slider()
+            value_before, value_after = slider_page.check_slider()
+            print(value_before, value_after)

@@ -88,9 +88,13 @@ def convert_to_24_hour_format(time_12h):
 
 def generated_date():
     yield Date(
-        year=random.randint(1900, 2100),
-        month=random.randint(1, 12),
-        day=random.randint(1, 28),
+        # year=random.randint(1900, 2100),
+        year=faker_eu.year(),
+        month_num=faker_eu.month(),
+        month_name=faker_eu.month_name(),
+        # month=random.randint(1, 12),
+        # day=random.randint(1, 28),
+        day=faker_eu.day_of_month(),
         hour=random.randint(0, 24),
         minute=(random.sample([0, 15, 30, 45], k=1))
     )

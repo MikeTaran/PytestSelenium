@@ -7,10 +7,10 @@ from generator.generator import generate_random_date as rnd_date, convert_to_12_
 from selenium.webdriver.support.ui import Select
 
 from selenium.common import TimeoutException
-from selenium.webdriver import Keys
+from selenium.webdriver import Keys, ActionChains
 
 from locators.widgets_page_locators import AccordianWidgetsPageLocators, AutoCompletePageLocators, \
-    DatePickerPageLocators
+    DatePickerPageLocators, SliderPageLocators
 from pages.base_page import BasePage
 
 
@@ -145,6 +145,7 @@ class DatePickerPage(BasePage):
         input_date = f"{month_name} {day}, {year} {convert_time}"
 
         input_field = self.element_is_visible(self.locators.DATE_TIME_INPUT)
+        start_date = input_field.get_attribute('value')
         input_field.click()
 
         self.element_is_visible(self.locators.DATE_TIME_MONTH_INPUT).click()
@@ -192,4 +193,20 @@ class DatePickerPage(BasePage):
                 break
         #
         output_date = input_field.get_attribute('value')
-        return input_date, output_date
+        return start_date, input_date, output_date
+
+
+class SliderPage(BasePage):
+    locators = SliderPageLocators()
+
+    def check_slider(self):
+        value = self.element_is_visible(self.locators.SLIDER_VALUE)
+        value_before = value.get_attribute('value')
+        slider_input = self.element_is_visible(self.locators.SLIDER_INPUT)
+
+        ActionChains(self.driver).drag_and_drop_by_offset(slider_input, -5, 0).perform()
+        # self.action_drag_and_drop_offset(slider_input, 0, 0)
+        # self.action_drag_and_drop_offset(slider_input, random.randint(1, 100), 0)
+        value_after = value.get_attribute('value')
+        time.sleep(5)
+        return value_before, value_after

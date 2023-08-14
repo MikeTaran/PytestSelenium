@@ -19,7 +19,8 @@ class Person:
 @dataclass
 class Date:
     day: int = None
-    month: int = None
+    month_num: int = None
+    month_name: str = None
     year: int = None
     hour: int = None
     minute: int = None

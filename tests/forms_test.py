@@ -26,5 +26,9 @@ class TestForms:
             submitted_data = forms_page.get_submitted_data()
             forms_page.check_close_button()
             assert forms_page.check_submitted_form_not_present(), 'The submitted form is present'
+            print('\n')
+            print(input_data)
+            print(submitted_data)
             for i in range(len(submitted_data)):
                 assert input_data[i] == submitted_data[i], f'InputData: {input_data[i]} is not match'
+

@@ -2,10 +2,11 @@ import os
 import random
 import calendar
 
-from data.data import Person
+from data.data import Person, Date
 from faker import Faker
 
 faker_ru = Faker('ru_Ru')
+faker_eu = Faker('En')
 Faker.seed()
 
 
@@ -56,6 +57,7 @@ def generated_file(desc='txt'):
     my_file.close()
     return my_file.name, file_path
 
+
 def convert_to_12_hour_format(time_24h):
     # Преобразование времени из 24-часового формата в 12-часовой формат
     hour, minute = map(int, time_24h.split(":"))
@@ -82,3 +84,13 @@ def convert_to_24_hour_format(time_12h):
         if hour != 12:
             hour += 12
     return f"{hour:02d}:{minute:02d}"
+
+
+def generated_date():
+    yield Date(
+        year=random.randint(1900, 2100),
+        month=random.randint(1, 12),
+        day=random.randint(1, 28),
+        hour=random.randint(0, 24),
+        minute=(random.sample([0, 15, 30, 45], k=1))
+    )

@@ -1,3 +1,4 @@
+import calendar
 import os
 import random
 import pyautogui
@@ -39,7 +40,9 @@ class FormsPage(BasePage):
     def fill_date_of_birth(self):
         person_info = next(generated_person())
         core_tab = self.driver.window_handles[0]
-        birthday = person_info.birthday
+        day, month, year, hour, minute = person_info.birthday
+        month_name = calendar.month_name[month]
+        birthday = f"{day:02d} {month_name},{year}"
         date_of_birth_input = self.element_is_visible(self.locators.DATE_OF_BIRTH)
         date_of_birth_input.click()
         self.driver.execute_script("window.navigator.clipboard.writeText(arguments[0])", birthday)

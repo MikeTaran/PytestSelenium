@@ -69,26 +69,27 @@ class TestWidgets:
             date_picker_page = DatePickerPage(driver, url_date)
             date_picker_page.open()
             input_date, output_date = date_picker_page.check_only_date_picker_input_fulldate()
-            assert input_date == output_date, ''
+            assert input_date == output_date, 'The date was Not changed, after full date input'
 
         def test_only_separate_data_picker(self, driver):
             date_picker_page = DatePickerPage(driver, url_date)
             date_picker_page.open()
             input_date, output_date = date_picker_page.check_separate_data_input()
-            assert input_date == output_date, ''
+            assert input_date == output_date, 'The date was Not changed, after separate date input'
 
         @pytest.mark.xfail
         def test_date_and_time_picker(self, driver):
             date_picker_page = DatePickerPage(driver, url_date)
             date_picker_page.open()
             input_date, output_date = date_picker_page.check_date_and_time_input()
-            assert input_date == output_date, ''
+            assert input_date == output_date, 'The date was Not changed, after full date input'
 
         def test_date_time_separate_input_picker(self, driver):
             date_picker_page = DatePickerPage(driver, url_date)
             date_picker_page.open()
             start_date, input_date, output_date = date_picker_page.check_date_and_time_separate_input()
-            assert start_date != input_date == output_date, ''
+            assert start_date != input_date == output_date, ('The date and time were Not changed,'
+                                                             ' after separate date input')
 
     class TestSlider:
         def test_slider(self, driver):
@@ -100,5 +101,9 @@ class TestWidgets:
         def test_progressive_bar(self, driver):
             slider_page = SliderPage(driver, url_bar)
             slider_page.open()
-
-
+            value_before, value_after = slider_page.check_progress_bar()
+            print(value_before, value_after)
+            if value_after == '100%':
+                assert value_before == value_after, 'The reset button is Not pressed'
+            else:
+                assert value_before != value_after, 'The progress bar is Not changed'

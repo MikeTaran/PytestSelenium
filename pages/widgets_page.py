@@ -7,7 +7,7 @@ from generator.generator import generate_random_date as rnd_date, convert_to_12_
 from selenium.webdriver.support.ui import Select
 
 from selenium.common import TimeoutException
-from selenium.webdriver import Keys, ActionChains
+from selenium.webdriver import Keys
 
 from locators.widgets_page_locators import AccordianWidgetsPageLocators, AutoCompletePageLocators, \
     DatePickerPageLocators, SliderPageLocators
@@ -207,4 +207,15 @@ class SliderPage(BasePage):
         return value_before, value_after
 
     def check_progress_bar(self):
-        pass
+        value_bar = self.element_is_present(self.locators.PROGRESSIVE_BAR_VALUE)
+        value_before = value_bar.text
+        start_stop_button = self.element_is_present(self.locators.PROGRESSIVE_BAR_START_BUTTON)
+        start_stop_button.click()
+        time.sleep(random.randint(2, 15))
+        try:
+            reset_button = self.element_is_visible(self.locators.PROGRESSIVE_BAR_RESET_BUTTON, 0)
+            reset_button.click()
+        except TimeoutException:
+            start_stop_button.click()
+        value_after = value_bar.text
+        return value_before, value_after

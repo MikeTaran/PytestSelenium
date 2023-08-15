@@ -35,3 +35,7 @@ class DatePickerPageLocators:
 class SliderPageLocators:
     SLIDER_INPUT = (By.CSS_SELECTOR, 'input[class="range-slider range-slider--primary"]')
     SLIDER_VALUE = (By.CSS_SELECTOR, 'input[id="sliderValue"]')
+
+    PROGRESSIVE_BAR_START_BUTTON = (By.CSS_SELECTOR, 'button[id="startStopButton"]')
+    PROGRESSIVE_BAR_RESET_BUTTON = (By.CSS_SELECTOR, 'button[id="resetButton"]')
+    PROGRESSIVE_BAR_VALUE = (By.CSS_SELECTOR, 'div[role="progressbar"]')

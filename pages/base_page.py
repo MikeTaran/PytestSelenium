@@ -13,7 +13,7 @@ class BasePage:
         self.remove_footer_and_banners()
 
     def element_is_visible(self, locator, timeout=5):
-        self.go_to_element(self.element_is_present(locator))
+        # self.go_to_element(self.element_is_present(locator))
         return WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator),
                                                          message=f"Can't see element by locator {locator}")
 

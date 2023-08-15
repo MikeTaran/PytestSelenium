@@ -39,3 +39,8 @@ class SliderPageLocators:
     PROGRESSIVE_BAR_START_BUTTON = (By.CSS_SELECTOR, 'button[id="startStopButton"]')
     PROGRESSIVE_BAR_RESET_BUTTON = (By.CSS_SELECTOR, 'button[id="resetButton"]')
     PROGRESSIVE_BAR_VALUE = (By.CSS_SELECTOR, 'div[role="progressbar"]')
+
+
+class TabsPageLocators:
+    TABS_LIST = (By.CSS_SELECTOR, 'nav[role="tablist"] a')
+    TAB_CONTENT = (By.CSS_SELECTOR, 'div[class="tab-content"]')

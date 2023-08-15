@@ -2,7 +2,7 @@ import random
 
 import pytest
 
-from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage, DatePickerPage, SliderPage
+from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage, DatePickerPage, SliderPage, TabsPage
 
 url_accordian = 'https://demoqa.com/accordian'
 url_autocomplete = 'https://demoqa.com/auto-complete'
@@ -107,3 +107,11 @@ class TestWidgets:
                 assert value_before == value_after, 'The reset button is Not pressed'
             else:
                 assert value_before != value_after, 'The progress bar is Not changed'
+
+    class TestTabs:
+        @pytest.mark.xfail
+        def test_tabs(self, driver):
+            tabs_page = TabsPage(driver, url_tabs)
+            tabs_page.open()
+            assert_rez = tabs_page.check_tabs()
+            assert assert_rez, 'Some tab is Not clickable'

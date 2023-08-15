@@ -6,11 +6,11 @@ from generator.generator import generate_random_date as rnd_date, convert_to_12_
 
 from selenium.webdriver.support.ui import Select
 
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, ElementClickInterceptedException
 from selenium.webdriver import Keys
 
 from locators.widgets_page_locators import AccordianWidgetsPageLocators, AutoCompletePageLocators, \
-    DatePickerPageLocators, SliderPageLocators
+    DatePickerPageLocators, SliderPageLocators, TabsPageLocators
 from pages.base_page import BasePage
 
 
@@ -219,3 +219,25 @@ class SliderPage(BasePage):
             start_stop_button.click()
         value_after = value_bar.text
         return value_before, value_after
+
+
+class TabsPage(BasePage):
+    locators = TabsPageLocators()
+
+    def check_tabs(self):
+        tabs_list = self.elements_are_present(self.locators.TABS_LIST)
+        data_title = []
+        data_content = []
+        assert_rez = True
+        for tab in tabs_list:
+            data_title.append(tab.text)
+            try:
+                tab.click()
+                tab_content = len(self.element_is_visible(self.locators.TAB_CONTENT).text)
+                data_content.append(tab_content)
+            except ElementClickInterceptedException:
+                data_content.append('')
+                print(f'Tab: "{tab.text}" is Not clickable')
+                assert_rez = False
+
+        return assert_rez

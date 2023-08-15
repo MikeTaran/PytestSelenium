@@ -10,7 +10,8 @@ from selenium.common import TimeoutException, ElementClickInterceptedException
 from selenium.webdriver import Keys
 
 from locators.widgets_page_locators import AccordianWidgetsPageLocators, AutoCompletePageLocators, \
-    DatePickerPageLocators, SliderPageLocators, TabsPageLocators
+    DatePickerPageLocators, SliderPageLocators, TabsPageLocators, ToolTipsPageLocators, MenuPageLocators, \
+    SelectMenuPageLocators
 from pages.base_page import BasePage
 
 
@@ -210,15 +211,17 @@ class SliderPage(BasePage):
         value_bar = self.element_is_present(self.locators.PROGRESSIVE_BAR_VALUE)
         value_before = value_bar.text
         start_stop_button = self.element_is_present(self.locators.PROGRESSIVE_BAR_START_BUTTON)
+        start_button_name = start_stop_button.text
         start_stop_button.click()
         time.sleep(random.randint(2, 15))
+        stop_button_name = start_stop_button.text
         try:
             reset_button = self.element_is_visible(self.locators.PROGRESSIVE_BAR_RESET_BUTTON, 0)
             reset_button.click()
         except TimeoutException:
             start_stop_button.click()
         value_after = value_bar.text
-        return value_before, value_after
+        return value_before, value_after, start_button_name, stop_button_name
 
 
 class TabsPage(BasePage):
@@ -241,3 +244,15 @@ class TabsPage(BasePage):
                 assert_rez = False
 
         return assert_rez
+
+
+class ToolTipsPage(BasePage):
+    locators = ToolTipsPageLocators()
+    def check_tool_tips(self):
+        pass
+
+class MenuPage(BasePage):
+    locators = MenuPageLocators()
+
+class SelectMenuPage(BasePage):
+    locators = SelectMenuPageLocators()

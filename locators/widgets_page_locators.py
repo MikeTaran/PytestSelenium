@@ -44,3 +44,23 @@ class SliderPageLocators:
 class TabsPageLocators:
     TABS_LIST = (By.CSS_SELECTOR, 'nav[role="tablist"] a')
     TAB_CONTENT = (By.CSS_SELECTOR, 'div[class="tab-content"]')
+
+
+class ToolTipsPageLocators:
+    HOVER_BUTTON = (By.CSS_SELECTOR, 'button[id="toolTipButton"]')
+    INPUT_FIELD = (By.CSS_SELECTOR, 'input[id="toolTipTextField"]')
+    TEXT_TOOLTIPS_LIST = (By.CSS_SELECTOR, 'div[id="texToolTopContainer"]>a')
+
+
+class MenuPageLocators:
+    MAIN_ITEM_1 = (By.CSS_SELECTOR, '')
+    MAIN_ITEM_2 = (By.CSS_SELECTOR, '')
+    MAIN_ITEM_3 = (By.CSS_SELECTOR, '')
+
+
+class SelectMenuPageLocators:
+    VALUE_INPUT = (By.CSS_SELECTOR, '')
+    SELECT_INPUT = (By.CSS_SELECTOR, '')
+    OLD_STYLE_INPUT = (By.CSS_SELECTOR, '')
+    MULTISELECT_INPUT = (By.CSS_SELECTOR, '')
+    STANDARD_MULTISELECT_INPUT = (By.CSS_SELECTOR, '')

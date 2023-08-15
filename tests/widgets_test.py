@@ -2,7 +2,8 @@ import random
 
 import pytest
 
-from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage, DatePickerPage, SliderPage, TabsPage
+from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage, DatePickerPage, SliderPage, TabsPage, \
+    ToolTipsPage, MenuPage, SelectMenuPage
 
 url_accordian = 'https://demoqa.com/accordian'
 url_autocomplete = 'https://demoqa.com/auto-complete'
@@ -101,8 +102,9 @@ class TestWidgets:
         def test_progressive_bar(self, driver):
             slider_page = SliderPage(driver, url_bar)
             slider_page.open()
-            value_before, value_after = slider_page.check_progress_bar()
-            print(value_before, value_after)
+            value_before, value_after, start, stop = slider_page.check_progress_bar()
+
+            assert start == 'Start' and stop == 'Stop', 'The name of button has Not been changed'
             if value_after == '100%':
                 assert value_before == value_after, 'The reset button is Not pressed'
             else:
@@ -115,3 +117,18 @@ class TestWidgets:
             tabs_page.open()
             assert_rez = tabs_page.check_tabs()
             assert assert_rez, 'Some tab is Not clickable'
+
+    class TestToolTips:
+        def test_tool_tips(self, driver):
+            tool_tips_page = ToolTipsPage(driver, url_tooltips)
+            tool_tips_page.open()
+
+    class TestMenu:
+        def test_menu(self, driver):
+            menu_page = MenuPage(driver, url_menu)
+            menu_page.open()
+
+    class TestSelectMenu:
+        def test_select_menu(self, driver):
+            select_menu_page = SelectMenuPage(driver, url_menu)
+            select_menu_page.open()

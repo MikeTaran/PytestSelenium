@@ -94,6 +94,11 @@ class TestWidgets:
         def test_slider(self, driver):
             slider_page = SliderPage(driver, url_slider)
             slider_page.open()
-            slider_page.check_slider()
             value_before, value_after = slider_page.check_slider()
-            print(value_before, value_after)
+            assert value_before != value_after, 'The slider value has Not been changed'
+
+        def test_progressive_bar(self, driver):
+            slider_page = SliderPage(driver, url_bar)
+            slider_page.open()
+
+

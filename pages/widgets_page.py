@@ -200,13 +200,11 @@ class SliderPage(BasePage):
     locators = SliderPageLocators()
 
     def check_slider(self):
-        value = self.element_is_visible(self.locators.SLIDER_VALUE)
-        value_before = value.get_attribute('value')
+        value_before = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
         slider_input = self.element_is_visible(self.locators.SLIDER_INPUT)
-
-        ActionChains(self.driver).drag_and_drop_by_offset(slider_input, -5, 0).perform()
-        # self.action_drag_and_drop_offset(slider_input, 0, 0)
-        # self.action_drag_and_drop_offset(slider_input, random.randint(1, 100), 0)
-        value_after = value.get_attribute('value')
-        time.sleep(5)
+        self.action_drag_and_drop_offset(slider_input, random.randint(1, 100), 0)
+        value_after = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
         return value_before, value_after
+
+    def check_progress_bar(self):
+        pass

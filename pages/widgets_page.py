@@ -248,11 +248,36 @@ class TabsPage(BasePage):
 
 class ToolTipsPage(BasePage):
     locators = ToolTipsPageLocators()
+
+    def get_text_from_tooltip(self, hover_element, hover_indicator):
+        element = self.element_is_visible(hover_element)
+        self.action_move_to_element(element)
+        self.element_is_visible(hover_indicator)
+        time.sleep(0.2)
+        tooltips_text = self.element_is_visible(self.locators.HOVER_TOOLTIP).text
+        return tooltips_text
+
     def check_tool_tips(self):
-        pass
+        tooltip_button = self.get_text_from_tooltip(self.locators.HOVER_BUTTON, self.locators.BUTTON_TOOLTIP)
+        tooltip_text_field = self.get_text_from_tooltip(self.locators.INPUT_FIELD, self.locators.INPUT_FIELD_TOOLTIP)
+        tooltip_contrary_text = self.get_text_from_tooltip(self.locators.CONTRARY_TEXT,
+                                                           self.locators.CONTRARY_TEXT_TOOLTIP)
+        tooltip_numbers_text = self.get_text_from_tooltip(self.locators.NUMBER_TEXT, self.locators.NUMBER_TEXT_TOOLTIP)
+
+        return tooltip_button, tooltip_text_field, tooltip_contrary_text, tooltip_numbers_text
+
 
 class MenuPage(BasePage):
     locators = MenuPageLocators()
+
+    def check_menu(self):
+        data = []
+        menu_list = self.elements_are_present(self.locators.MAIN_ITEM_LIST)
+        for menu in menu_list:
+            self.action_move_to_element(menu)
+            data.append(menu.text)
+        return data
+
 
 class SelectMenuPage(BasePage):
     locators = SelectMenuPageLocators()

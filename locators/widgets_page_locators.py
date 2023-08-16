@@ -48,26 +48,22 @@ class TabsPageLocators:
 
 class ToolTipsPageLocators:
     HOVER_BUTTON = (By.CSS_SELECTOR, 'button[id="toolTipButton"]')
-    BUTTON_TOOLTIPS_HOVER = (By.CSS_SELECTOR, 'button[aria-describedby="buttonToolTip"]')
-
+    BUTTON_TOOLTIP = (By.CSS_SELECTOR, 'button[aria-describedby="buttonToolTip"]')
 
     INPUT_FIELD = (By.CSS_SELECTOR, 'input[id="toolTipTextField"]')
     INPUT_FIELD_TOOLTIP = (By.CSS_SELECTOR, 'input[aria-describedby="textFieldToolTip"]')
 
-    TEXT_TOOLTIPS_LIST = (By.CSS_SELECTOR, 'a:nth-child(1)')
-    TEXT_TOOLTIPS_LIST_TOOLTIP = (By.CSS_SELECTOR, 'a[aria-describedby="contraryTexToolTip"')
+    CONTRARY_TEXT = (By.CSS_SELECTOR, 'div[id="texToolTopContainer"]>a:first-child')
+    CONTRARY_TEXT_TOOLTIP = (By.CSS_SELECTOR, 'a[aria-describedby="contraryTexToolTip"')
 
-    TEXT_TOOLTIPS_LIST = (By.CSS_SELECTOR, 'a:nth-child(2)')
-    TEXT_TOOLTIPS_LIST_TOOLTIP = (By.CSS_SELECTOR, 'a[aria-describedby="sectionToolTip"')
+    NUMBER_TEXT = (By.CSS_SELECTOR, 'div[id="texToolTopContainer"]>a:last-child')
+    NUMBER_TEXT_TOOLTIP = (By.CSS_SELECTOR, 'a[aria-describedby="sectionToolTip"')
 
     HOVER_TOOLTIP = (By.CSS_SELECTOR, 'div[class="tooltip-inner"]')
 
 
-
 class MenuPageLocators:
-    MAIN_ITEM_1 = (By.CSS_SELECTOR, '')
-    MAIN_ITEM_2 = (By.CSS_SELECTOR, '')
-    MAIN_ITEM_3 = (By.CSS_SELECTOR, '')
+    MAIN_ITEM_LIST = (By.CSS_SELECTOR, 'ul[id="nav"] li a')
 
 
 class SelectMenuPageLocators:

@@ -125,11 +125,23 @@ class TestWidgets:
         def test_tool_tips(self, driver):
             tool_tips_page = ToolTipsPage(driver, url_tooltips)
             tool_tips_page.open()
+            (tooltip_button, tooltip_text_field, tooltip_contrary_text,
+             tooltip_numbers_text) = tool_tips_page.check_tool_tips()
+
+            assert tooltip_button == 'You hovered over the Button', f'Hover was missed: {tooltip_button}'
+            assert tooltip_text_field == 'You hovered over the text field', f'Hover was missed: {tooltip_text_field}'
+            assert tooltip_contrary_text == 'You hovered over the Contrary', \
+                f'Hover was missed: {tooltip_contrary_text}'
+            assert tooltip_numbers_text == 'You hovered over the 1.10.32', f'Hover was missed: {tooltip_numbers_text}'
 
     class TestMenu:
         def test_menu(self, driver):
+            mockup_title = ['Main Item 1', 'Main Item 2', 'Sub Item', 'Sub Item', 'SUB SUB LIST »',
+                            'Sub Sub Item 1', 'Sub Sub Item 2', 'Main Item 3']
             menu_page = MenuPage(driver, url_menu)
             menu_page.open()
+            menu_title = menu_page.check_menu()
+            assert mockup_title == menu_title, 'Menu is Not match mockup'
 
     class TestSelectMenu:
         def test_select_menu(self, driver):

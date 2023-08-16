@@ -48,8 +48,11 @@ class TabsPageLocators:
 
 class ToolTipsPageLocators:
     HOVER_BUTTON = (By.CSS_SELECTOR, 'button[id="toolTipButton"]')
+
     INPUT_FIELD = (By.CSS_SELECTOR, 'input[id="toolTipTextField"]')
+
     TEXT_TOOLTIPS_LIST = (By.CSS_SELECTOR, 'div[id="texToolTopContainer"]>a')
+
 
 
 class MenuPageLocators:

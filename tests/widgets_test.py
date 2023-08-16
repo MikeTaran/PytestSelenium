@@ -115,7 +115,10 @@ class TestWidgets:
         def test_tabs(self, driver):
             tabs_page = TabsPage(driver, url_tabs)
             tabs_page.open()
-            assert_rez = tabs_page.check_tabs()
+            assert_rez, title_list, content_list = tabs_page.check_tabs()
+
+            for i in range(len(content_list)):
+                assert content_list[i] > 0, f'The tab "{title_list[i]}" is empty.'
             assert assert_rez, 'Some tab is Not clickable'
 
     class TestToolTips:

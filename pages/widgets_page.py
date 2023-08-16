@@ -239,11 +239,11 @@ class TabsPage(BasePage):
                 tab_content = len(self.element_is_visible(self.locators.TAB_CONTENT).text)
                 data_content.append(tab_content)
             except ElementClickInterceptedException:
-                data_content.append('')
+                data_content.append(0)
                 print(f'Tab: "{tab.text}" is Not clickable')
                 assert_rez = False
 
-        return assert_rez
+        return assert_rez, data_title, data_content
 
 
 class ToolTipsPage(BasePage):

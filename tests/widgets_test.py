@@ -150,4 +150,5 @@ class TestWidgets:
             select_menu_page.check_select_value_dropdown()
             select_menu_page.check_select_one_dropdown()
             select_menu_page.check_old_stile_menu()
+            select_menu_page.check_multy_dropdown()
 

@@ -2,6 +2,8 @@ import calendar
 import random
 import time
 
+from selenium.webdriver.common.by import By
+
 from generator.generator import generate_random_date as rnd_date, convert_to_12_hour_format as conv_12h
 
 from selenium.webdriver.support.ui import Select
@@ -289,8 +291,8 @@ class SelectMenuPage(BasePage):
         select_value_input = self.element_is_present(self.locators.SELECT_VALUE_INPUT)
         select_value_input.send_keys('g')
         select_value_input.send_keys(Keys.RETURN)
-        select_value_text = self.element_is_visible(self.locators.SELECT_VALUE_TEXT).text
-        print(select_value_text)
+        select_value_text_after = self.element_is_visible(self.locators.SELECT_VALUE_TEXT).text
+        print(select_value_text_after)
 
     def check_select_one_dropdown(self):
         select_one = self.element_is_visible(self.locators.SELECT_ONE)
@@ -302,6 +304,25 @@ class SelectMenuPage(BasePage):
 
     def check_old_stile_menu(self):
         select = Select(self.element_is_visible(self.locators.OLD_STYLE_INPUT_LIST))
-        select.select_by_index(random.randint(1, 10))
-        old_stile_text = self.element_is_visible(self.locators.OLD_STYLE_INPUT_LIST).text
-        print(old_stile_text)
+        old_stile_text_before = self.element_is_visible(self.locators.OLD_STYLE_TEXT).text
+        index = random.randint(1, 10)
+        select.select_by_index(index)
+        old_stile_text_after = self.driver.find_element(By.CSS_SELECTOR,
+                                                        f'select[id="oldSelectMenu"] option[value="{index}"]').text
+        print(old_stile_text_before, old_stile_text_after)
+
+    def check_multy_dropdown(self):
+        input_field = self.element_is_present(self.locators.MULTISELECT_INPUT)
+        self.element_is_visible(self.locators.MULTISELECT_FIELD).click()
+
+        # input_field.click()
+        input_field.send_keys('g')
+        input_field.send_keys(Keys.RETURN)
+        dropdown_list = self.elements_are_present(self.locators.MULTISELECT_INPUT_LIST)
+        for _ in dropdown_list:
+            input_field.send_keys(Keys.RETURN)
+
+        self.element_is_visible(self.locators.MULTISELECT_ITEMS_CROSS).click()
+        print(len(dropdown_list))
+
+        time.sleep(3)

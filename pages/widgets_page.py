@@ -8,6 +8,7 @@ from selenium.webdriver.support.ui import Select
 
 from selenium.common import TimeoutException, ElementClickInterceptedException
 from selenium.webdriver import Keys
+from selenium.webdriver.support.ui import Select
 
 from locators.widgets_page_locators import AccordianWidgetsPageLocators, AutoCompletePageLocators, \
     DatePickerPageLocators, SliderPageLocators, TabsPageLocators, ToolTipsPageLocators, MenuPageLocators, \
@@ -281,3 +282,26 @@ class MenuPage(BasePage):
 
 class SelectMenuPage(BasePage):
     locators = SelectMenuPageLocators()
+
+    def check_select_value_dropdown(self):
+        select_value = self.element_is_visible(self.locators.SELECT_VALUE)
+        select_value.click()
+        select_value_input = self.element_is_present(self.locators.SELECT_VALUE_INPUT)
+        select_value_input.send_keys('g')
+        select_value_input.send_keys(Keys.RETURN)
+        select_value_text = self.element_is_visible(self.locators.SELECT_VALUE_TEXT).text
+        print(select_value_text)
+
+    def check_select_one_dropdown(self):
+        select_one = self.element_is_visible(self.locators.SELECT_ONE)
+        select_one.click()
+        value_list = self.elements_are_present(self.locators.SELECT_ONE_INPUT_LIST)
+        value_list[random.randint(0, len(value_list) - 1)].click()
+        select_one_text = self.element_is_visible(self.locators.SELECT_ONE_TEXT).text
+        print(select_one_text)
+
+    def check_old_stile_menu(self):
+        select = Select(self.element_is_visible(self.locators.OLD_STYLE_INPUT_LIST))
+        select.select_by_index(random.randint(1, 10))
+        old_stile_text = self.element_is_visible(self.locators.OLD_STYLE_INPUT_LIST).text
+        print(old_stile_text)

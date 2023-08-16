@@ -145,5 +145,9 @@ class TestWidgets:
 
     class TestSelectMenu:
         def test_select_menu(self, driver):
-            select_menu_page = SelectMenuPage(driver, url_menu)
+            select_menu_page = SelectMenuPage(driver, url_select_menu)
             select_menu_page.open()
+            select_menu_page.check_select_value_dropdown()
+            select_menu_page.check_select_one_dropdown()
+            select_menu_page.check_old_stile_menu()
+

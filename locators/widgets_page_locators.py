@@ -67,8 +67,18 @@ class MenuPageLocators:
 
 
 class SelectMenuPageLocators:
-    VALUE_INPUT = (By.CSS_SELECTOR, '')
-    SELECT_INPUT = (By.CSS_SELECTOR, '')
-    OLD_STYLE_INPUT = (By.CSS_SELECTOR, '')
+    SELECT_VALUE = (By.CSS_SELECTOR, 'div[id="withOptGroup"]')
+    SELECT_VALUE_TEXT = (By.CSS_SELECTOR, 'div[id="withOptGroup"] div[class*="singleValue"]')
+    SELECT_VALUE_INPUT = (By.CSS_SELECTOR, 'input[id="react-select-2-input"]')
+    SELECT_VALUE_INPUT_LIST = (By.CSS_SELECTOR, 'div[id*="react-select-2-option"]')
+
+    SELECT_ONE = (By.CSS_SELECTOR, 'div[id="selectOne"]')
+    SELECT_ONE_TEXT = (By.CSS_SELECTOR, 'div[id="selectOne"] div[class*="singleValue"]')
+    SELECT_ONE_INPUT = (By.CSS_SELECTOR, 'input[id="react-select-3-input"]')
+    SELECT_ONE_INPUT_LIST = (By.CSS_SELECTOR, 'div[id*="react-select-3-option"]')
+
+    OLD_STYLE_INPUT_LIST = (By.CSS_SELECTOR, 'select[id="oldSelectMenu"]')
+    OLD_STYLE_TEXT = (By.CSS_SELECTOR, "select#oldSelectMenu[xpath='1']")
+
     MULTISELECT_INPUT = (By.CSS_SELECTOR, '')
-    STANDARD_MULTISELECT_INPUT = (By.CSS_SELECTOR, '')
+    STANDARD_MULTISELECT_INPUT = (By.CSS_SELECTOR, 'select[id="cars"]')

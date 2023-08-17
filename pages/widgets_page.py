@@ -6,9 +6,7 @@ from selenium.webdriver.common.by import By
 
 from generator.generator import generate_random_date as rnd_date, convert_to_12_hour_format as conv_12h
 
-from selenium.webdriver.support.ui import Select
-
-from selenium.common import TimeoutException, ElementClickInterceptedException
+from selenium.common import TimeoutException, ElementClickInterceptedException, NoSuchElementException
 from selenium.webdriver import Keys
 from selenium.webdriver.support.ui import Select
 
@@ -287,29 +285,31 @@ class SelectMenuPage(BasePage):
 
     def check_select_value_dropdown(self):
         select_value = self.element_is_visible(self.locators.SELECT_VALUE)
+        text_before = select_value.text
         select_value.click()
         select_value_input = self.element_is_present(self.locators.SELECT_VALUE_INPUT)
         select_value_input.send_keys('g')
         select_value_input.send_keys(Keys.RETURN)
-        select_value_text_after = self.element_is_visible(self.locators.SELECT_VALUE_TEXT).text
-        print(select_value_text_after)
+        text_after = self.element_is_visible(self.locators.SELECT_VALUE_TEXT).text
+        return text_before, text_after
 
     def check_select_one_dropdown(self):
         select_one = self.element_is_visible(self.locators.SELECT_ONE)
+        text_before = select_one.text
         select_one.click()
         value_list = self.elements_are_present(self.locators.SELECT_ONE_INPUT_LIST)
         value_list[random.randint(0, len(value_list) - 1)].click()
-        select_one_text = self.element_is_visible(self.locators.SELECT_ONE_TEXT).text
-        print(select_one_text)
+        text_after = self.element_is_visible(self.locators.SELECT_ONE_TEXT).text
+        return text_before, text_after
 
     def check_old_stile_menu(self):
         select = Select(self.element_is_visible(self.locators.OLD_STYLE_INPUT_LIST))
-        old_stile_text_before = self.element_is_visible(self.locators.OLD_STYLE_TEXT).text
+        text_before = self.element_is_visible(self.locators.OLD_STYLE_TEXT).text
         index = random.randint(1, 10)
         select.select_by_index(index)
-        old_stile_text_after = self.driver.find_element(By.CSS_SELECTOR,
-                                                        f'select[id="oldSelectMenu"] option[value="{index}"]').text
-        print(old_stile_text_before, old_stile_text_after)
+        text_after = self.driver.find_element(By.CSS_SELECTOR,
+                                              f'select[id="oldSelectMenu"] option[value="{index}"]').text
+        return text_before, text_after
 
     def check_multy_dropdown(self):
         input_field = self.element_is_present(self.locators.MULTISELECT_INPUT)
@@ -321,8 +321,27 @@ class SelectMenuPage(BasePage):
         dropdown_list = self.elements_are_present(self.locators.MULTISELECT_INPUT_LIST)
         for _ in dropdown_list:
             input_field.send_keys(Keys.RETURN)
-
         self.element_is_visible(self.locators.MULTISELECT_ITEMS_CROSS).click()
-        print(len(dropdown_list))
 
-        time.sleep(3)
+        time.sleep(0.5)
+        self.element_is_visible(self.locators.MULTISELECT_FIELD).click()
+        dropdown_list = self.elements_are_visible(self.locators.MULTISELECT_INPUT_LIST)
+        for _ in dropdown_list:
+            input_field.send_keys(Keys.RETURN)
+        item_cross_before = self.elements_are_visible(self.locators.MULTISELECT_ITEM_CROSS)
+        item_cross_before[random.randint(0, len(item_cross_before) - 1)].click()
+        time.sleep(0.2)
+        item_cross_after = self.elements_are_visible(self.locators.MULTISELECT_ITEM_CROSS)
+        return len(item_cross_before) - len(item_cross_after)
+
+    def check_standard_multiselect(self):
+        select = Select(self.element_is_visible(self.locators.STANDARD_MULTISELECT_INPUT))
+        num_index = len(self.elements_are_present(self.locators.STANDARD_MULTISELECT_INPUT_LIST))
+        try:
+            index = random.randint(0, num_index - 1)
+            select.select_by_index(index)
+            index = random.randint(0, num_index - 1)
+            select.select_by_index(index)
+            return True
+        except NoSuchElementException:
+            return False

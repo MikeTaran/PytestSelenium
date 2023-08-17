@@ -144,11 +144,32 @@ class TestWidgets:
             assert mockup_title == menu_title, 'Menu is Not match mockup'
 
     class TestSelectMenu:
-        def test_select_menu(self, driver):
+        def test_select_value_dropdown(self, driver):
             select_menu_page = SelectMenuPage(driver, url_select_menu)
             select_menu_page.open()
-            select_menu_page.check_select_value_dropdown()
-            select_menu_page.check_select_one_dropdown()
-            select_menu_page.check_old_stile_menu()
-            select_menu_page.check_multy_dropdown()
+            text_before, text_after = select_menu_page.check_select_value_dropdown()
+            assert text_before != text_after, 'The value was Not selected'
 
+        def test_select_one_dropdown(self, driver):
+            select_menu_page = SelectMenuPage(driver, url_select_menu)
+            select_menu_page.open()
+            text_before, text_after = select_menu_page.check_select_one_dropdown()
+            assert text_before != text_after, 'The value was Not selected'
+
+        def test_old_stile_menu(self, driver):
+            select_menu_page = SelectMenuPage(driver, url_select_menu)
+            select_menu_page.open()
+            text_before, text_after = select_menu_page.check_old_stile_menu()
+            assert text_before != text_after, 'The value was Not selected'
+
+        def test_multy_dropdown(self, driver):
+            select_menu_page = SelectMenuPage(driver, url_select_menu)
+            select_menu_page.open()
+            test = select_menu_page.check_multy_dropdown()
+            assert test == 1, 'The value was Not selected'
+
+        def test_standard_multiselect(self, driver):
+            select_menu_page = SelectMenuPage(driver, url_select_menu)
+            select_menu_page.open()
+            test = select_menu_page.check_standard_multiselect()
+            assert test, 'The value was Not selected'

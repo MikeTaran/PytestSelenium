@@ -42,12 +42,14 @@ class TestInteractions:
             resizable_page = ResizablePage(driver, url_resizable)
             resizable_page.open()
             size_max, size_min = resizable_page.check_resizable_restricted()
-            assert size_max == [500, 300], ''
-            assert size_min == [150, 150], ''
+            assert size_max == [500, 300], 'Size of element more than restricted'
+            assert size_min == [150, 150], 'Size of element less than restricted'
 
         def test_resizable_free(self, driver):
             resizable_page = ResizablePage(driver, url_resizable)
             resizable_page.open()
             size = resizable_page.check_resizable_free()
-            assert size != [200, 200], ''
+            assert size != [200, 200], 'Size of element was Not changed'
+
+
 

@@ -1,6 +1,6 @@
 import time
 
-from pages.interactions_page import SortablePage, SelectablePage, ResizablePage
+from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage
 
 url_sortable = 'https://demoqa.com/sortable'
 url_selectable = 'https://demoqa.com/selectable'
@@ -51,5 +51,36 @@ class TestInteractions:
             size = resizable_page.check_resizable_free()
             assert size != [200, 200], 'Size of element was Not changed'
 
+    class TestDroppable:
+        def open_droppable_page(self, driver):
+            droppable_page = DroppablePage(driver, url_droppable)
+            droppable_page.open()
+            return droppable_page
 
+        def test_droppable_simple(self, driver):
+            droppable_page = self.open_droppable_page(driver)
+            drop_title, drop_color = droppable_page.check_droppable_simple()
+            assert drop_title == 'Dropped!' and drop_color == '#4682b4', 'The element was Not droppable'
+
+        def test_droppable_accept(self, driver):
+            droppable_page = self.open_droppable_page(driver)
+            drop_title, drop_color = droppable_page.check_droppable_accept()
+            assert drop_title == 'Dropped!' and drop_color == '#4682b4', 'The element was Not droppable'
+
+        def test_droppable_not_accept(self, driver):
+            droppable_page = self.open_droppable_page(driver)
+            drop_title, drop_color = droppable_page.check_droppable_not_accept()
+            assert drop_title == 'Drop here' and drop_color == '#000000', 'The element was Not droppable'
+
+        def test_prevent_not_greedy(self, driver):
+            droppable_page = self.open_droppable_page(driver)
+            outer_title, inner_title, outer_color, inner_color = droppable_page.check_prevent_not_greedy()
+            assert (outer_title == 'Dropped!' and inner_title == 'Dropped!' and
+                    outer_color == '#4682b4' and inner_color == '#4682b4'), 'Propagation is greedy'
+
+        def test_prevent_greedy(self, driver):
+            droppable_page = self.open_droppable_page(driver)
+            outer_title, inner_title, outer_color, inner_color = droppable_page.check_prevent_greedy()
+            assert (outer_title == 'Outer droppable' and inner_title == 'Dropped!' and
+                    outer_color == '#000000' and inner_color == '#4682b4'), 'Propagation is Not greedy'
 

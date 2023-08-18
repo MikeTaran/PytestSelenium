@@ -1,7 +1,7 @@
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import re
 
 class BasePage:
     def __init__(self, driver, url):
@@ -101,3 +101,9 @@ class BasePage:
     def text_of_elements_list(self, elements_list):
         return [element.text for element in elements_list]
 
+    def get_background_color_element_hex(self, element):
+        rgba = element.value_of_css_property('background-color')
+        rgba_match = re.match(r'rgba\((\d+), (\d+), (\d+), (\d+)\)', rgba)
+        if rgba_match:
+            r, g, b, a = map(int, rgba_match.groups())
+            return '#{r:02x}{g:02x}{b:02x}'.format(r=r, g=g, b=b)

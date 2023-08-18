@@ -24,3 +24,31 @@ class ResizablePageLocators:
     BOX_1_ANCHOR = (By.CSS_SELECTOR, 'div[id="resizableBoxWithRestriction"] span')
     BOX_2 = (By.CSS_SELECTOR, 'div[id="resizable"]')
     BOX_2_ANCHOR = (By.CSS_SELECTOR, 'div[id="resizable"] span')
+
+
+class DroppablePageLocators:
+    # SIMPLE
+    SIMPLE_TAB = (By.CSS_SELECTOR, 'a[id="droppableExample-tab-simple"]')
+    DRAG = (By.CSS_SELECTOR, 'div[id="draggable"]')
+    DROP_SIMPLE = (By.CSS_SELECTOR, 'div[id="droppableExample-tabpane-simple"] div[id="droppable"]')
+    DROP_SIMPLE_TITLE = (By.CSS_SELECTOR, 'div[id="droppableExample-tabpane-simple"] div[id="droppable"] p')
+    # ACCEPT
+    ACCEPT_TAB = (By.CSS_SELECTOR, 'a[id="droppableExample-tab-accept"]')
+    DRAG_ACCEPTABLE = (By.CSS_SELECTOR, 'div[id="acceptable"]')
+    DRAG_NOT_ACCEPTABLE = (By.CSS_SELECTOR, 'div[id="notAcceptable"]')
+    DROP_ACCEPT = (By.CSS_SELECTOR, 'div[id="acceptDropContainer"] div[id="droppable"]')
+    DROP_ACCEPT_TITLE = (By.CSS_SELECTOR, 'div[id="acceptDropContainer"] div[id="droppable"] p')
+    # PREVENT
+    PREVENT_TAB = (By.CSS_SELECTOR, 'a[id="droppableExample-tab-preventPropogation"]')
+    DRAG_PREVENT = (By.CSS_SELECTOR, 'div[id="dragBox"]')
+    OUTER_NOT_GREEDY = (By.CSS_SELECTOR, 'div[id="notGreedyDropBox"]')
+    OUTER_NOT_GREEDY_TITLE = (By.CSS_SELECTOR, 'div[id="notGreedyDropBox"] p')
+    INNER_NOT_GREEDY = (By.CSS_SELECTOR, 'div[id="notGreedyInnerDropBox"]')
+    INNER_NOT_GREEDY_TITLE = (By.CSS_SELECTOR, 'div[id="notGreedyInnerDropBox"] p')
+    OUTER_GREEDY = (By.CSS_SELECTOR, 'div[id="greedyDropBox"]')
+    OUTER_GREEDY_TITLE = (By.CSS_SELECTOR, 'div[id="greedyDropBox"] p')
+    INNER_GREEDY = (By.CSS_SELECTOR, 'div[id="greedyDropBoxInner"]')
+    INNER_GREEDY_TITLE = (By.CSS_SELECTOR, 'div[id="greedyDropBoxInner"] p')
+    # REVERT
+    REVERT_TAB = (By.CSS_SELECTOR, 'a[id="droppableExample-tab-revertable"]')
+

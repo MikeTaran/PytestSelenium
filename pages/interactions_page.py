@@ -2,7 +2,7 @@ import random
 
 from selenium.common import TimeoutException
 
-from locators.interactions_page_locators import SortablePageLocators, SelectablePageLocators, ResizablePagelocators
+from locators.interactions_page_locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators
 from pages.base_page import BasePage
 
 
@@ -55,5 +55,29 @@ class SelectablePage(BasePage):
         except TimeoutException:
             return 0
 
+
 class ResizablePage(BasePage):
-    locators = ResizablePagelocators()
+    locators = ResizablePageLocators()
+
+    @staticmethod
+    def get_size_of_element(element):
+        coordinates = element.get_attribute("style")
+        width = int(coordinates.split(";")[0].split(":")[1].replace(" ", "")[:-2])
+        height = int(coordinates.split(";")[1].split(":")[1].replace(" ", "")[:-2])
+        return [width, height]
+
+    def check_resizable_restricted(self):
+        element1 = self.element_is_visible(self.locators.BOX_1)
+        anchor_element1 = self.element_is_present(self.locators.BOX_1_ANCHOR)
+        self.action_drag_and_drop_offset(anchor_element1, 350, 250)
+        size_max = self.get_size_of_element(element1)
+        self.action_drag_and_drop_offset(anchor_element1, -400, -200)
+        size_min = self.get_size_of_element(element1)
+        return size_max, size_min
+
+    def check_resizable_free(self):
+        element1 = self.element_is_visible(self.locators.BOX_2)
+        anchor_element1 = self.element_is_present(self.locators.BOX_2_ANCHOR)
+        self.action_drag_and_drop_offset(anchor_element1, random.randint(-150, 150), random.randint(-150, 150))
+        size_free_box = self.get_size_of_element(element1)
+        return size_free_box

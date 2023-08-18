@@ -100,3 +100,4 @@ class BasePage:
 
     def text_of_elements_list(self, elements_list):
         return [element.text for element in elements_list]
+

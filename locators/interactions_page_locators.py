@@ -19,8 +19,8 @@ class SelectablePageLocators:
     GRID_TAB_LIST_ACTIVE = (By.CSS_SELECTOR, 'div[id="gridContainer"] li[class*="active"]')
 
 
-class ResizablePagelocators:
+class ResizablePageLocators:
     BOX_1 = (By.CSS_SELECTOR, 'div[id="resizableBoxWithRestriction"]')
-    BOX_1_ANCHOR = (By.CSS_SELECTOR, '')
+    BOX_1_ANCHOR = (By.CSS_SELECTOR, 'div[id="resizableBoxWithRestriction"] span')
     BOX_2 = (By.CSS_SELECTOR, 'div[id="resizable"]')
-    BOX_2_ANCHOR = (By.CSS_SELECTOR, '')
+    BOX_2_ANCHOR = (By.CSS_SELECTOR, 'div[id="resizable"] span')

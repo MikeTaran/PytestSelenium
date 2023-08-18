@@ -38,6 +38,16 @@ class TestInteractions:
             time.sleep(3)
 
     class TestResizable:
-        def test_resizable(self, driver):
+        def test_resizable_restricted(self, driver):
             resizable_page = ResizablePage(driver, url_resizable)
             resizable_page.open()
+            size_max, size_min = resizable_page.check_resizable_restricted()
+            assert size_max == [500, 300], ''
+            assert size_min == [150, 150], ''
+
+        def test_resizable_free(self, driver):
+            resizable_page = ResizablePage(driver, url_resizable)
+            resizable_page.open()
+            size = resizable_page.check_resizable_free()
+            assert size != [200, 200], ''
+

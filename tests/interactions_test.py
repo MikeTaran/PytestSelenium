@@ -84,3 +84,15 @@ class TestInteractions:
             assert (outer_title == 'Outer droppable' and inner_title == 'Dropped!' and
                     outer_color == '#000000' and inner_color == '#4682b4'), 'Propagation is Not greedy'
 
+        def test_revert(self, driver):
+            droppable_page = self.open_droppable_page(driver)
+            position, drop_title, drop_color = droppable_page.check_revert()
+            print(position, drop_title, drop_color)
+            assert (drop_title == 'Dropped!' and position == ['0px', '0px'] and
+                    drop_color == '#4682b4'), 'The element was Not reverted'
+
+        def test_not_revert(self, driver):
+            droppable_page = self.open_droppable_page(driver)
+            outer_title, inner_title, outer_color, inner_color = droppable_page.check_prevent_greedy()
+            assert (outer_title == 'Outer droppable' and inner_title == 'Dropped!' and
+                    outer_color == '#000000' and inner_color == '#4682b4'), 'Propagation is Not greedy'

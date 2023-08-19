@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import re
 
+
 class BasePage:
     def __init__(self, driver, url):
         self.driver = driver
@@ -107,3 +108,8 @@ class BasePage:
         if rgba_match:
             r, g, b, a = map(int, rgba_match.groups())
             return '#{r:02x}{g:02x}{b:02x}'.format(r=r, g=g, b=b)
+
+    def get_position_of_element(self, element):
+        left = element.value_of_css_property('left')
+        top = element.value_of_css_property('top')
+        return [left, top]

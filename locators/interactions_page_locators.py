@@ -51,4 +51,8 @@ class DroppablePageLocators:
     INNER_GREEDY_TITLE = (By.CSS_SELECTOR, 'div[id="greedyDropBoxInner"] p')
     # REVERT
     REVERT_TAB = (By.CSS_SELECTOR, 'a[id="droppableExample-tab-revertable"]')
+    DRAG_REVERT = (By.CSS_SELECTOR, 'div[id="revertable"]')
+    DRAG_NOT_REVERT = (By.CSS_SELECTOR, 'div[id="notRevertable"]')
+    DROP_REVERT = (By.CSS_SELECTOR, 'div[id="revertableDropContainer"] div[id="droppable"]')
+    DROP_REVERT_TITLE = (By.CSS_SELECTOR, 'div[id="revertableDropContainer"] div[id="droppable"] p')
 

@@ -1,4 +1,5 @@
 import random
+import time
 
 from selenium.common import TimeoutException
 
@@ -62,9 +63,9 @@ class ResizablePage(BasePage):
 
     @staticmethod
     def get_size_of_element(element):
-        coordinates = element.get_attribute("style")
-        width = int(coordinates.split(";")[0].split(":")[1].replace(" ", "")[:-2])
-        height = int(coordinates.split(";")[1].split(":")[1].replace(" ", "")[:-2])
+        size = element.get_attribute("style")
+        width = int(size.split(";")[0].split(":")[1].replace(" ", "")[:-2])
+        height = int(size.split(";")[1].split(":")[1].replace(" ", "")[:-2])
         return [width, height]
 
     def check_resizable_restricted(self):
@@ -137,3 +138,15 @@ class DroppablePage(BasePage):
         outer_color = self.get_background_color_element_hex(outer_not_greedy)
         inner_color = self.get_background_color_element_hex(inner_not_greedy)
         return outer_title, inner_title, outer_color, inner_color
+
+    def check_revert(self):
+        self.element_is_visible(self.locators.REVERT_TAB).click()
+        drag_revert = self.element_is_visible(self.locators.DRAG_REVERT)
+        drop = self.element_is_visible(self.locators.DROP_REVERT)
+        self.action_drag_and_drop_to_element(drag_revert, drop)
+        drop_title = self.element_is_visible(self.locators.DROP_REVERT_TITLE).text
+        drop_color = self.get_background_color_element_hex(drop)
+        time.sleep(0.5)
+        position = self.get_position_of_element(drag_revert)
+
+        return position, drop_title, drop_color

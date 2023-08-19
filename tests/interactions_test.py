@@ -120,3 +120,15 @@ class TestInteractions:
                     position_x_after[1] == position_x_before[1]), 'The element was shifted by Y'
             assert (position_y_after[0] == position_y_before[0] and
                     position_y_after[1] != position_y_before[1]), 'The element was shifted by Y'
+
+        def test_container_restricted_box(self, driver):
+            draggable_page = self.open_draggable_page(driver)
+            drag_position, box_size = draggable_page.check_container_restricted_box()
+            assert drag_position[0] < box_size[0] and drag_position[1] < box_size[1], \
+                'The element is Not within the box'
+
+        def test_container_restricted_parent(self, driver):
+            draggable_page = self.open_draggable_page(driver)
+            drag_position, box_size = draggable_page.check_container_restricted_parent()
+            assert drag_position[0] < box_size[0] and drag_position[1] < box_size[1], \
+                'The element is Not within the box'

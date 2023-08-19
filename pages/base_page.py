@@ -110,6 +110,11 @@ class BasePage:
             return '#{r:02x}{g:02x}{b:02x}'.format(r=r, g=g, b=b)
 
     def get_position_of_element(self, element):
-        left = element.value_of_css_property('left')
-        top = element.value_of_css_property('top')
+        left = float(element.value_of_css_property('left')[:-2])
+        top = float(element.value_of_css_property('top')[:-2])
         return [left, top]
+
+    def get_size_of_element(self, element):
+        width = float(element.value_of_css_property('width')[:-2])
+        height = float(element.value_of_css_property('height')[:-2])
+        return [width, height]

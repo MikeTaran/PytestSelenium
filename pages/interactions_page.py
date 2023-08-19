@@ -190,3 +190,28 @@ class DraggablePage(BasePage):
         position_x_after = self.get_position_of_element(drag_x)
         position_y_after = self.get_position_of_element(drag_y)
         return position_x_before, position_x_after, position_y_before, position_y_after
+
+    def check_container_restricted_box(self):
+        self.element_is_visible(self.locators.TAB_CONTAINER).click()
+        drag = self.element_is_visible(self.locators.DRAG_CONTAINED)
+        box = self.element_is_visible(self.locators.BOX_CONTAINER)
+        drag_size = self.get_size_of_element(drag)
+        box_size = self.get_size_of_element(box)
+        shift_x = box_size[0] - drag_size[0] + 150
+        shift_y = box_size[1] - drag_size[1] + 150
+        self.action_drag_and_drop_offset(drag, shift_x, shift_y)
+        drag_position = self.get_position_of_element(drag)
+        time.sleep(3)
+        return drag_position, box_size
+
+    def check_container_restricted_parent(self):
+        self.element_is_visible(self.locators.TAB_CONTAINER).click()
+        drag = self.element_is_visible(self.locators.SPAN_CONTAINED)
+        box = self.element_is_visible(self.locators.PARENT_CONTAINER)
+        box_size = self.get_size_of_element(box)
+        shift_x = box_size[0] + 50
+        shift_y = box_size[1] + 50
+        self.action_drag_and_drop_offset(drag, shift_x, shift_y)
+        drag_position = self.get_position_of_element(drag)
+        time.sleep(3)
+        return drag_position, box_size

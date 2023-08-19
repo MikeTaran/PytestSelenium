@@ -66,8 +66,12 @@ class DraggablePageLocators:
     DRAG_X = (By.CSS_SELECTOR, 'div[id="restrictedX"]')
     DRAG_Y = (By.CSS_SELECTOR, 'div[id="restrictedY"]')
     # CONTAINER
-    TAB_CONTAINER = (By.CSS_SELECTOR, '')
-    DRAG_CONTAINED = (By.CSS_SELECTOR, '')
+    TAB_CONTAINER = (By.CSS_SELECTOR, 'a[id="draggableExample-tab-containerRestriction"]')
+    DRAG_CONTAINED = (By.CSS_SELECTOR, 'div[id="containmentWrapper"] div')
+    BOX_CONTAINER = (By.CSS_SELECTOR, 'div[id="containmentWrapper"]')
+    SPAN_CONTAINED = (By.CSS_SELECTOR, '.draggable.ui-widget-content.m-3 span')
+    PARENT_CONTAINER = (By.CSS_SELECTOR, '.draggable.ui-widget-content.m-3')
+
     # CURSOR
     TAB_CURSOR = (By.CSS_SELECTOR, '')
     DRAG_CENTER = (By.CSS_SELECTOR, '')

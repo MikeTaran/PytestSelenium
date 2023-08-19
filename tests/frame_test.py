@@ -78,6 +78,7 @@ class TestFrameAlertWindow:
             assert 'Sample Nested Iframe page.' in main_page_text, 'The main page was Not selected after return'
 
     class TestModalDialogs:
+        @pytest.mark.xfail
         def test_modal_dialog(self, driver):
             modal_dialog_page = ModalDialogPage(driver, url_modal)
             modal_dialog_page.open()

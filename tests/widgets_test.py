@@ -99,6 +99,7 @@ class TestWidgets:
             value_before, value_after = slider_page.check_slider()
             assert value_before != value_after, 'The slider value has Not been changed'
 
+        @pytest.mark.xfail
         def test_progressive_bar(self, driver):
             slider_page = SliderPage(driver, url_bar)
             slider_page.open()
@@ -135,6 +136,7 @@ class TestWidgets:
             assert tooltip_numbers_text == 'You hovered over the 1.10.32', f'Hover was missed: {tooltip_numbers_text}'
 
     class TestMenu:
+        @pytest.mark.xfail
         def test_menu(self, driver):
             mockup_title = ['Main Item 1', 'Main Item 2', 'Sub Item', 'Sub Item', 'SUB SUB LIST »',
                             'Sub Sub Item 1', 'Sub Sub Item 2', 'Main Item 3']

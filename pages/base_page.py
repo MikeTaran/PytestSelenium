@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,6 +10,7 @@ class BasePage:
         self.driver = driver
         self.url = url
 
+    @allure.step('open page')
     def open(self):
         self.driver.get(self.url)
         self.remove_footer_and_banners()
@@ -51,37 +53,44 @@ class BasePage:
             "return arguments[0].scrollIntoView(true);", element)
 
     # browser.execute_script("return arguments[0].scrollIntoView(true);", button)
+    @allure.step('alert_is_present')
     def alert_is_present(self, timeout=5):
         wait = WebDriverWait(self.driver, timeout)
         alert = wait.until(EC.alert_is_present(), message=f"Can't find alert")
         return alert
 
+    @allure.step('action_double_click')
     def action_double_click(self, element):
         action = ActionChains(self.driver)
         action.double_click(element)
         action.perform()
 
+    @allure.step('action_right_click')
     def action_right_click(self, element):
         action = ActionChains(self.driver)
         action.context_click(element)
         action.perform()
 
+    @allure.step('action_drag_and_drop_offset')
     def action_drag_and_drop_offset(self, element, x_coord, y_coord):
         action = ActionChains(self.driver)
         action.drag_and_drop_by_offset(element, x_coord, y_coord)
         action.perform()
 
+    @allure.step('action_drag_and_drop_to_element')
     def action_drag_and_drop_to_element(self, source, target):
         action = ActionChains(self.driver)
         action.drag_and_drop(source, target)
         action.perform()
 
+    @allure.step('action_move_to_element')
     def action_move_to_element(self, element):
         action = ActionChains(self.driver)
         action.move_to_element(element)
         action.perform()
 
     # remove banners
+    @allure.step('remove_footer_and_banners')
     def remove_footer_and_banners(self):
         tab_name = self.driver.window_handles[0]
         try:
@@ -96,12 +105,15 @@ class BasePage:
             self.driver.switch_to.window(tab_name)
         # self.driver.execute_script("document.body.style.zoom = '0.75'")
 
+    @allure.step('refresh_window')
     def refresh_window(self):
         self.driver.refresh()
 
+    @allure.step('text_of_elements_list')
     def text_of_elements_list(self, elements_list):
         return [element.text for element in elements_list]
 
+    @allure.step('get_background_color_element_hex')
     def get_background_color_element_hex(self, element):
         rgba = element.value_of_css_property('background-color')
         rgba_match = re.match(r'rgba\((\d+), (\d+), (\d+), (\d+)\)', rgba)
@@ -109,11 +121,13 @@ class BasePage:
             r, g, b, a = map(int, rgba_match.groups())
             return '#{r:02x}{g:02x}{b:02x}'.format(r=r, g=g, b=b)
 
+    @allure.step('get_position_of_element')
     def get_position_of_element(self, element):
         left = float(element.value_of_css_property('left')[:-2])
         top = float(element.value_of_css_property('top')[:-2])
         return [left, top]
 
+    @allure.step('get_size_of_element')
     def get_size_of_element(self, element):
         width = float(element.value_of_css_property('width')[:-2])
         height = float(element.value_of_css_property('height')[:-2])

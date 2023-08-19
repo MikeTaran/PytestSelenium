@@ -4,7 +4,7 @@ import time
 from selenium.common import TimeoutException
 
 from locators.interactions_page_locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators, \
-    DroppablePageLocators
+    DroppablePageLocators, DraggablePageLocators
 from pages.base_page import BasePage
 
 
@@ -162,3 +162,31 @@ class DroppablePage(BasePage):
         position = self.get_position_of_element(drag_revert)
 
         return position, drop_title, drop_color
+
+
+class DraggablePage(BasePage):
+    locators = DraggablePageLocators()
+
+    def check_draggable_simple(self):
+        self.element_is_visible(self.locators.TAB_SIMPLE).click()
+        drag = self.element_is_visible(self.locators.DRAG_SIMPLE)
+        position_before = self.get_position_of_element(drag)
+        shift_x = random.randint(1, 100)
+        shift_y = random.randint(1, 100)
+        self.action_drag_and_drop_offset(drag, shift_x, shift_y)
+        position_after = self.get_position_of_element(drag)
+        return position_before, position_after
+
+    def check_axis_restricted(self):
+        self.element_is_visible(self.locators.TAB_AXIS).click()
+        drag_x = self.element_is_visible(self.locators.DRAG_X)
+        drag_y = self.element_is_visible(self.locators.DRAG_Y)
+        position_x_before = self.get_position_of_element(drag_x)
+        position_y_before = self.get_position_of_element(drag_y)
+        shift_x = random.randint(1, 100)
+        shift_y = random.randint(1, 100)
+        self.action_drag_and_drop_offset(drag_x, shift_x, shift_y)
+        self.action_drag_and_drop_offset(drag_y, shift_x, shift_y)
+        position_x_after = self.get_position_of_element(drag_x)
+        position_y_after = self.get_position_of_element(drag_y)
+        return position_x_before, position_x_after, position_y_before, position_y_after

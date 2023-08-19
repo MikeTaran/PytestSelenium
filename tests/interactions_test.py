@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage
+from pages.interactions_page import SortablePage, SelectablePage, ResizablePage, DroppablePage, DraggablePage
 
 url_sortable = 'https://demoqa.com/sortable'
 url_selectable = 'https://demoqa.com/selectable'
@@ -99,3 +99,24 @@ class TestInteractions:
             position, drop_title, drop_color = droppable_page.check_not_revert()
             assert (drop_title == 'Dropped!' and position != ['0px', '0px'] and
                     drop_color == '#4682b4'), 'The element was reverted'
+
+    class TestDraggable:
+        @staticmethod
+        def open_draggable_page(driver):
+            draggable_page = DraggablePage(driver, url_dragabble)
+            draggable_page.open()
+            return draggable_page
+
+        def test_draggable_simple(self, driver):
+            draggable_page = self.open_draggable_page(driver)
+            position_before, position_after = draggable_page.check_draggable_simple()
+            assert position_after != position_before, 'The element didnt move'
+
+        def test_axis_restricted(self, driver):
+            draggable_page = self.open_draggable_page(driver)
+            position_x_before, position_x_after, position_y_before, position_y_after \
+                = draggable_page.check_axis_restricted()
+            assert (position_x_after[0] != position_x_before[0] and
+                    position_x_after[1] == position_x_before[1]), 'The element was shifted by Y'
+            assert (position_y_after[0] == position_y_before[0] and
+                    position_y_after[1] != position_y_before[1]), 'The element was shifted by Y'

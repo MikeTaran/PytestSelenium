@@ -150,3 +150,15 @@ class DroppablePage(BasePage):
         position = self.get_position_of_element(drag_revert)
 
         return position, drop_title, drop_color
+
+    def check_not_revert(self):
+        self.element_is_visible(self.locators.REVERT_TAB).click()
+        drag_revert = self.element_is_visible(self.locators.DRAG_NOT_REVERT)
+        drop = self.element_is_visible(self.locators.DROP_REVERT)
+        self.action_drag_and_drop_to_element(drag_revert, drop)
+        drop_title = self.element_is_visible(self.locators.DROP_REVERT_TITLE).text
+        drop_color = self.get_background_color_element_hex(drop)
+        time.sleep(0.5)
+        position = self.get_position_of_element(drag_revert)
+
+        return position, drop_title, drop_color

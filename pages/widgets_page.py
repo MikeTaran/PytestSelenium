@@ -2,6 +2,7 @@ import calendar
 import random
 import time
 
+import allure
 from selenium.webdriver.common.by import By
 
 from generator.generator import generate_random_date as rnd_date, convert_to_12_hour_format as conv_12h
@@ -19,6 +20,7 @@ from pages.base_page import BasePage
 class AccordianWidgetsPage(BasePage):
     locators = AccordianWidgetsPageLocators()
 
+    @allure.step('check_accordian_content')
     def check_accordian_content(self):
         title_data = []
         content_len_data = []
@@ -50,6 +52,7 @@ class AccordianWidgetsPage(BasePage):
 class AutoCompletePage(BasePage):
     locators = AutoCompletePageLocators()
 
+    @allure.step('check_multy_input')
     def check_multy_input(self, input_list):
         data = []
         multy_input = self.element_is_visible(self.locators.MULTY_INPUT)
@@ -63,6 +66,7 @@ class AutoCompletePage(BasePage):
             data.append(result.text)
         return data
 
+    @allure.step('check_single_input')
     def check_single_input(self, letter):
         single_input = self.element_is_visible(self.locators.SINGLE_INPUT)
         single_input.send_keys(letter)
@@ -70,6 +74,7 @@ class AutoCompletePage(BasePage):
         result = self.element_is_visible(self.locators.SINGLE_INPUT_RESULT).text
         return result
 
+    @allure.step('check_multy_element_deletion')
     def check_multy_element_deletion(self):
         result = self.check_multy_input(['a', 'b', 'q', 'w'])
         index = random.randint(0, 3)
@@ -78,6 +83,7 @@ class AutoCompletePage(BasePage):
         result_list = self.elements_are_visible(self.locators.MULTY_INPUT_RESULT_LIST)
         return len(result), len(result_list)
 
+    @allure.step('test_all_multy_deletion')
     def test_all_multy_deletion(self):
         self.check_multy_input(['a', 'b', 'q', 'w'])
         all_delete_cross = self.element_is_visible(self.locators.REMOVE_ALL_MULTY_ELEMENT)
@@ -92,6 +98,7 @@ class AutoCompletePage(BasePage):
 class DatePickerPage(BasePage):
     locators = DatePickerPageLocators()
 
+    @allure.step('check_only_date_picker_input_fulldate')
     def check_only_date_picker_input_fulldate(self):
         day, month, year, hour, minute = rnd_date()
         input_date = f'{month:02d}/{day:02d}/{year}'
@@ -107,6 +114,7 @@ class DatePickerPage(BasePage):
 
         return input_date, output_date
 
+    @allure.step('check_separate_data_input')
     def check_separate_data_input(self):
         day, month, year, hour, minute = rnd_date()
         input_date = f'{month:02d}/{day:02d}/{year}'
@@ -124,6 +132,7 @@ class DatePickerPage(BasePage):
         output_date = input_field.get_attribute('value')
         return input_date, output_date
 
+    @allure.step('check_date_and_time_input')
     def check_date_and_time_input(self):
         day, month, year, hour, minute = rnd_date()
         month_name = calendar.month_name[month]
@@ -139,6 +148,7 @@ class DatePickerPage(BasePage):
         output_date = input_field.get_attribute('value')
         return input_date, output_date
 
+    @allure.step('check_date_and_time_separate_input')
     def check_date_and_time_separate_input(self):
         day, month, year, hour, minute = rnd_date()
         month_name = calendar.month_name[month]
@@ -201,6 +211,7 @@ class DatePickerPage(BasePage):
 class SliderPage(BasePage):
     locators = SliderPageLocators()
 
+    @allure.step('check_slider')
     def check_slider(self):
         value_before = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
         slider_input = self.element_is_visible(self.locators.SLIDER_INPUT)
@@ -208,6 +219,7 @@ class SliderPage(BasePage):
         value_after = self.element_is_visible(self.locators.SLIDER_VALUE).get_attribute('value')
         return value_before, value_after
 
+    @allure.step('check_progress_bar')
     def check_progress_bar(self):
         value_bar = self.element_is_present(self.locators.PROGRESSIVE_BAR_VALUE)
         value_before = value_bar.text
@@ -228,6 +240,7 @@ class SliderPage(BasePage):
 class TabsPage(BasePage):
     locators = TabsPageLocators()
 
+    @allure.step('check_tabs')
     def check_tabs(self):
         tabs_list = self.elements_are_present(self.locators.TABS_LIST)
         data_title = []
@@ -250,14 +263,16 @@ class TabsPage(BasePage):
 class ToolTipsPage(BasePage):
     locators = ToolTipsPageLocators()
 
+    @allure.step('get_text_from_tooltip')
     def get_text_from_tooltip(self, hover_element, hover_indicator):
         element = self.element_is_visible(hover_element)
         self.action_move_to_element(element)
         self.element_is_visible(hover_indicator)
-        time.sleep(0.2)
+        time.sleep(0.5)
         tooltips_text = self.element_is_visible(self.locators.HOVER_TOOLTIP).text
         return tooltips_text
 
+    @allure.step('check_tool_tips')
     def check_tool_tips(self):
         tooltip_button = self.get_text_from_tooltip(self.locators.HOVER_BUTTON, self.locators.BUTTON_TOOLTIP)
         tooltip_text_field = self.get_text_from_tooltip(self.locators.INPUT_FIELD, self.locators.INPUT_FIELD_TOOLTIP)
@@ -271,6 +286,7 @@ class ToolTipsPage(BasePage):
 class MenuPage(BasePage):
     locators = MenuPageLocators()
 
+    @allure.step('check_menu')
     def check_menu(self):
         data = []
         menu_list = self.elements_are_present(self.locators.MAIN_ITEM_LIST)
@@ -283,6 +299,7 @@ class MenuPage(BasePage):
 class SelectMenuPage(BasePage):
     locators = SelectMenuPageLocators()
 
+    @allure.step('check_select_value_dropdown')
     def check_select_value_dropdown(self):
         select_value = self.element_is_visible(self.locators.SELECT_VALUE)
         text_before = select_value.text
@@ -293,6 +310,7 @@ class SelectMenuPage(BasePage):
         text_after = self.element_is_visible(self.locators.SELECT_VALUE_TEXT).text
         return text_before, text_after
 
+    @allure.step('check_select_one_dropdown')
     def check_select_one_dropdown(self):
         select_one = self.element_is_visible(self.locators.SELECT_ONE)
         text_before = select_one.text
@@ -302,6 +320,7 @@ class SelectMenuPage(BasePage):
         text_after = self.element_is_visible(self.locators.SELECT_ONE_TEXT).text
         return text_before, text_after
 
+    @allure.step('check_old_stile_menu')
     def check_old_stile_menu(self):
         select = Select(self.element_is_visible(self.locators.OLD_STYLE_INPUT_LIST))
         text_before = self.element_is_visible(self.locators.OLD_STYLE_TEXT).text
@@ -311,10 +330,10 @@ class SelectMenuPage(BasePage):
                                               f'select[id="oldSelectMenu"] option[value="{index}"]').text
         return text_before, text_after
 
+    @allure.step('check_multy_dropdown')
     def check_multy_dropdown(self):
         input_field = self.element_is_present(self.locators.MULTISELECT_INPUT)
         self.element_is_visible(self.locators.MULTISELECT_FIELD).click()
-
         # input_field.click()
         input_field.send_keys('g')
         input_field.send_keys(Keys.RETURN)
@@ -334,6 +353,7 @@ class SelectMenuPage(BasePage):
         item_cross_after = self.elements_are_visible(self.locators.MULTISELECT_ITEM_CROSS)
         return len(item_cross_before) - len(item_cross_after)
 
+    @allure.step('check_standard_multiselect')
     def check_standard_multiselect(self):
         select = Select(self.element_is_visible(self.locators.STANDARD_MULTISELECT_INPUT))
         num_index = len(self.elements_are_present(self.locators.STANDARD_MULTISELECT_INPUT_LIST))

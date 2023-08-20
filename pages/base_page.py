@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import allure
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
@@ -132,3 +134,7 @@ class BasePage:
         width = float(element.value_of_css_property('width')[:-2])
         height = float(element.value_of_css_property('height')[:-2])
         return [width, height]
+
+    def allure_screenshot(self):
+        attach = self.driver.get_screenshot_as_png()
+        allure.attach(attach, name=f"Screenshot_{datetime.today()}", attachment_type=allure.attachment_type.PNG)

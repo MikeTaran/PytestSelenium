@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver import ActionChains
 
 from generator.generator import generated_person
@@ -9,6 +10,7 @@ from pages.base_page import BasePage
 class WindowsTabPage(BasePage):
     locators = WindowsTabPageLocators()
 
+    @allure.step('windows_new_tab')
     def windows_new_tab(self, method):
         available_cases = {
             'tab': self.locators.NEW_TAB_BUTTON,
@@ -33,6 +35,7 @@ class WindowsTabPage(BasePage):
 class AlertsPage(BasePage):
     locators = AlertsPageLocators()
 
+    @allure.step('simple_alert')
     def simple_alert(self):
         self.element_is_visible(self.locators.SIMPLE_ALERT_BUTTON).click()
         self.alert_is_present()
@@ -41,6 +44,7 @@ class AlertsPage(BasePage):
         alert.accept()
         return alert_text
 
+    @allure.step('time_alert')
     def time_alert(self):
         self.element_is_visible(self.locators.TIME_ALERT_BUTTON).click()
         self.alert_is_present(10)
@@ -49,6 +53,7 @@ class AlertsPage(BasePage):
         alert.accept()
         return alert_text
 
+    @allure.step('confirm_alert')
     def confirm_alert(self):
         self.element_is_visible(self.locators.CONFIRM_ALERT_BUTTON).click()
         self.alert_is_present()
@@ -63,6 +68,7 @@ class AlertsPage(BasePage):
         dismiss_text = self.element_is_visible(self.locators.CONFIRM_ALERT_RESULT).text
         return confirm_text, dismiss_text
 
+    @allure.step('prompt_alert')
     def prompt_alert(self):
         person_info = next(generated_person())
         first_name = person_info.firstname
@@ -78,6 +84,7 @@ class AlertsPage(BasePage):
 class IframesPage(BasePage):
     locators = IframesPageLocators()
 
+    @allure.step('check_iframe')
     def check_iframe(self, num_frame):
         locator = ''
         if num_frame == 'frame1':
@@ -96,6 +103,7 @@ class IframesPage(BasePage):
 class NestedFramePage(BasePage):
     locators = NestedFramePageLocators()
 
+    @allure.step('check_nested_frames')
     def check_nested_frames(self):
         # iframe_parent = self.element_is_visible(self.locators.IFRAME_PARENT)
         self.driver.switch_to.frame(1)
@@ -113,6 +121,7 @@ class NestedFramePage(BasePage):
 class ModalDialogPage(BasePage):
     locators = ModalDialogPageLocators()
 
+    @allure.step('check_small_modal_dialogs')
     def check_small_modal_dialogs(self):
         self.element_is_visible(self.locators.SMALL_MODAL_BUTTON).click()
         title = self.element_is_visible(self.locators.MODAL_TITLE).text
@@ -130,6 +139,7 @@ class ModalDialogPage(BasePage):
 
         return [title, len_content]
 
+    @allure.step('check_large_modal_dialogs')
     def check_large_modal_dialogs(self):
         self.element_is_visible(self.locators.LARGE_MODAL_BUTTON).click()
         title = self.element_is_visible(self.locators.MODAL_TITLE).text

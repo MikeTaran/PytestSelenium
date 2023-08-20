@@ -1,8 +1,8 @@
 import calendar
 import os
 import random
-import pyautogui
 
+import allure
 from selenium.common import TimeoutException
 from selenium.webdriver import Keys
 
@@ -14,6 +14,7 @@ from pages.base_page import BasePage
 class FormsPage(BasePage):
     locators = FormPageLocators()
 
+    @allure.step('fill_static_fields')
     def fill_static_fields(self):
         person_info = next(generated_person())
         first_name = person_info.firstname
@@ -30,6 +31,7 @@ class FormsPage(BasePage):
         self.element_is_visible(self.locators.CURRENT_ADDRESS).send_keys(current_address)
         return full_name, email, mobile, current_address
 
+    @allure.step('fill_gender_radiobutton')
     def fill_gender_radiobutton(self):
         gender_list = self.elements_are_present(self.locators.GENDER_LIST)
         rnd_i = random.randint(0, 2)
@@ -37,6 +39,7 @@ class FormsPage(BasePage):
         radiobutton_name = gender_list[rnd_i].text
         return radiobutton_name
 
+    @allure.step('fill_date_of_birth')
     def fill_date_of_birth(self):
         person_info = next(generated_person())
         core_tab = self.driver.window_handles[0]
@@ -54,6 +57,7 @@ class FormsPage(BasePage):
         date_of_birth_input.send_keys(Keys.RETURN)
         return birthday
 
+    @allure.step('fill_hobbies_checkboxes')
     def fill_hobbies_checkboxes(self):
         hobbies_txt = ['Sports', 'Reading', 'Music']
         hobbies_list = self.elements_are_visible(self.locators.HOBBIES_LIST)
@@ -62,9 +66,11 @@ class FormsPage(BasePage):
         hobbies_list[rnd_i].click()
         return f'{hobbies_txt[0]}, {hobbies_txt[rnd_i]}'
 
+    @allure.step('get_checked_hobbies_list')
     def get_checked_hobbies_list(self):
         pass
 
+    @allure.step('upload_picture')
     def upload_picture(self):
         file_name, path = generated_file('jpg')
         self.element_is_present(self.locators.UPLOAD_FILE_BUTTON).send_keys(path)
@@ -74,6 +80,7 @@ class FormsPage(BasePage):
         # message = uploaded_message.split('\\')[-1]
         return name
 
+    @allure.step('fill_subject_field')
     def fill_subject_field(self):
         input_field = (self.element_is_visible(self.locators.SUBJECT))
         sub = ["English", "Maths", "Physics", "Chemistry", "Biology", "Computer Science", "Commerce",
@@ -83,6 +90,7 @@ class FormsPage(BasePage):
         input_field.send_keys(Keys.RETURN)
         return subject
 
+    @allure.step('fill_state_and_city_fields')
     def fill_state_and_city_fields(self):
         state = 'NCR'
         city = 'Noida'
@@ -94,12 +102,15 @@ class FormsPage(BasePage):
         self.element_is_visible(self.locators.CITY_INPUT).send_keys(Keys.RETURN)
         return f'{state} {city}'
 
+    @allure.step('check_submit_button')
     def check_submit_button(self):
         self.element_is_clickable(self.locators.SUBMIT_BUTTON).click()
 
+    @allure.step('check_close_button')
     def check_close_button(self):
         self.element_is_clickable(self.locators.CLOSE_BUTTON).click()
 
+    @allure.step('check_submitted_form_present')
     def check_submitted_form_present(self):
         try:
             self.element_is_visible(self.locators.SUBMITTED_FORM)
@@ -107,6 +118,7 @@ class FormsPage(BasePage):
         except TimeoutException:
             return False
 
+    @allure.step('check_submitted_form_not_present')
     def check_submitted_form_not_present(self):
         try:
             self.element_is_not_visible(self.locators.SUBMITTED_FORM)
@@ -114,6 +126,7 @@ class FormsPage(BasePage):
         except TimeoutException:
             return False
 
+    @allure.step('get_submitted_data')
     def get_submitted_data(self):
         data = []
         data_list = self.elements_are_present(self.locators.SUBMITTED_FORM_DATA)

@@ -1,6 +1,7 @@
 import random
 import time
 
+import allure
 from selenium.common import TimeoutException
 
 from locators.interactions_page_locators import SortablePageLocators, SelectablePageLocators, ResizablePageLocators, \
@@ -61,13 +62,13 @@ class SelectablePage(BasePage):
 class ResizablePage(BasePage):
     locators = ResizablePageLocators()
 
-    @staticmethod
-    def get_size_of_element(element):
-        size = element.get_attribute("style")
-        width = int(size.split(";")[0].split(":")[1].replace(" ", "")[:-2])
-        height = int(size.split(";")[1].split(":")[1].replace(" ", "")[:-2])
-        return [width, height]
+    # def get_size_of_element(self, element):
+    #     size = element.get_attribute("style")
+    #     width = int(size.split(";")[0].split(":")[1].replace(" ", "")[:-2])
+    #     height = int(size.split(";")[1].split(":")[1].replace(" ", "")[:-2])
+    #     return [width, height]
 
+    @allure.step('check_resizable_restricted')
     def check_resizable_restricted(self):
         element1 = self.element_is_visible(self.locators.BOX_1)
         anchor_element1 = self.element_is_present(self.locators.BOX_1_ANCHOR)
@@ -77,6 +78,7 @@ class ResizablePage(BasePage):
         size_min = self.get_size_of_element(element1)
         return size_max, size_min
 
+    @allure.step('check_resizable_free')
     def check_resizable_free(self):
         element1 = self.element_is_visible(self.locators.BOX_2)
         anchor_element1 = self.element_is_present(self.locators.BOX_2_ANCHOR)
@@ -88,6 +90,7 @@ class ResizablePage(BasePage):
 class DroppablePage(BasePage):
     locators = DroppablePageLocators()
 
+    @allure.step('check_droppable_simple')
     def check_droppable_simple(self):
         self.element_is_visible(self.locators.SIMPLE_TAB).click()
         drag = self.element_is_visible(self.locators.DRAG)
@@ -97,6 +100,7 @@ class DroppablePage(BasePage):
         drop_color = self.get_background_color_element_hex(drop)
         return drop_title, drop_color
 
+    @allure.step('check_droppable_not_accept')
     def check_droppable_not_accept(self):
         self.element_is_visible(self.locators.ACCEPT_TAB).click()
         drag_not_accept = self.element_is_visible(self.locators.DRAG_NOT_ACCEPTABLE)
@@ -106,6 +110,7 @@ class DroppablePage(BasePage):
         drop_color = self.get_background_color_element_hex(drop)
         return drop_title, drop_color
 
+    @allure.step('check_droppable_accept')
     def check_droppable_accept(self):
         self.element_is_visible(self.locators.ACCEPT_TAB).click()
         drag_accept = self.element_is_visible(self.locators.DRAG_ACCEPTABLE)
@@ -115,6 +120,7 @@ class DroppablePage(BasePage):
         drop_color = self.get_background_color_element_hex(drop)
         return drop_title, drop_color
 
+    @allure.step('check_prevent_not_greedy')
     def check_prevent_not_greedy(self):
         self.element_is_visible(self.locators.PREVENT_TAB).click()
         drag = self.element_is_visible(self.locators.DRAG_PREVENT)
@@ -127,6 +133,7 @@ class DroppablePage(BasePage):
         inner_color = self.get_background_color_element_hex(inner_not_greedy)
         return outer_title, inner_title, outer_color, inner_color
 
+    @allure.step('check_prevent_greedy')
     def check_prevent_greedy(self):
         self.element_is_visible(self.locators.PREVENT_TAB).click()
         drag = self.element_is_visible(self.locators.DRAG_PREVENT)
@@ -139,6 +146,7 @@ class DroppablePage(BasePage):
         inner_color = self.get_background_color_element_hex(inner_not_greedy)
         return outer_title, inner_title, outer_color, inner_color
 
+    @allure.step('check_revert')
     def check_revert(self):
         self.element_is_visible(self.locators.REVERT_TAB).click()
         drag_revert = self.element_is_visible(self.locators.DRAG_REVERT)
@@ -151,6 +159,7 @@ class DroppablePage(BasePage):
 
         return position, drop_title, drop_color
 
+    @allure.step('check_not_revert')
     def check_not_revert(self):
         self.element_is_visible(self.locators.REVERT_TAB).click()
         drag_revert = self.element_is_visible(self.locators.DRAG_NOT_REVERT)
@@ -167,6 +176,7 @@ class DroppablePage(BasePage):
 class DraggablePage(BasePage):
     locators = DraggablePageLocators()
 
+    @allure.step('check_draggable_simple')
     def check_draggable_simple(self):
         self.element_is_visible(self.locators.TAB_SIMPLE).click()
         drag = self.element_is_visible(self.locators.DRAG_SIMPLE)
@@ -177,6 +187,7 @@ class DraggablePage(BasePage):
         position_after = self.get_position_of_element(drag)
         return position_before, position_after
 
+    @allure.step('check_axis_restricted')
     def check_axis_restricted(self):
         self.element_is_visible(self.locators.TAB_AXIS).click()
         drag_x = self.element_is_visible(self.locators.DRAG_X)
@@ -191,6 +202,7 @@ class DraggablePage(BasePage):
         position_y_after = self.get_position_of_element(drag_y)
         return position_x_before, position_x_after, position_y_before, position_y_after
 
+    @allure.step('check_container_restricted_box')
     def check_container_restricted_box(self):
         self.element_is_visible(self.locators.TAB_CONTAINER).click()
         drag = self.element_is_visible(self.locators.DRAG_CONTAINED)
@@ -204,6 +216,7 @@ class DraggablePage(BasePage):
         time.sleep(3)
         return drag_position, box_size
 
+    @allure.step('check_container_restricted_parent')
     def check_container_restricted_parent(self):
         self.element_is_visible(self.locators.TAB_CONTAINER).click()
         drag = self.element_is_visible(self.locators.SPAN_CONTAINED)

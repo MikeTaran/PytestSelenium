@@ -1,5 +1,6 @@
 import random
 
+import allure
 import pytest
 
 from pages.widgets_page import AccordianWidgetsPage, AutoCompletePage, DatePickerPage, SliderPage, TabsPage, \
@@ -16,8 +17,11 @@ url_menu = 'https://demoqa.com/menu'
 url_select_menu = 'https://demoqa.com/select-menu'
 
 
+@allure.suite('Widgets')
 class TestWidgets:
+    @allure.feature('Test Accordian')
     class TestAccordian:
+        @allure.title('Check accordian')
         def test_accordian(self, driver):
             widget_page = AccordianWidgetsPage(driver, url_accordian)
             widget_page.open()
@@ -28,11 +32,13 @@ class TestWidgets:
                 assert title[i] == title_mockup[i], f'The title of block_{i} is Not correct'
             assert accord, 'More than one block was opened'
 
+    @allure.feature('Test Auto Complete')
     class TestAutoComplete:
         input_letter = 'qwertyuiopadghklcvbnm'
         color_data = ["Aqua", "Magenta", "Indigo", "Voilet", "White", "White", "Black", "Purple",
                       "Yellow", "Green", "Blue", "Red"]
 
+        @allure.title('Check multy autocomplete')
         def test_multy_autocomplete(self, driver):
             autocomplete_page = AutoCompletePage(driver, url_autocomplete)
             autocomplete_page.open()
@@ -43,6 +49,7 @@ class TestWidgets:
             for color in data:
                 assert color in self.color_data, f'The color: {color} is Not in colors list'
 
+        @allure.title('Check single autocomplete')
         def test_single_autocomplete(self, driver):
             autocomplete_page = AutoCompletePage(driver, url_autocomplete)
             autocomplete_page.open()
@@ -51,20 +58,24 @@ class TestWidgets:
             color = autocomplete_page.check_single_input(*rnd_letter)
             assert color in self.color_data, f'The color: {color} is Not in colors list'
 
+        @allure.title('Check multy element deletion')
         def test_multy_element_deletion(self, driver):
             autocomplete_page = AutoCompletePage(driver, url_autocomplete)
             autocomplete_page.open()
             input_list, output_list = autocomplete_page.check_multy_element_deletion()
             assert input_list - output_list == 1, 'It was deleted more or less one items'
 
+        @allure.title('Check all elements deletion')
         def test_all_multy_deletion(self, driver):
             autocomplete_page = AutoCompletePage(driver, url_autocomplete)
             autocomplete_page.open()
             result_list = autocomplete_page.test_all_multy_deletion()
             assert result_list, 'Not all colors were deleted'
 
+    @allure.feature('Test Date Picker')
     class TestDatePicker:
 
+        @allure.title('Check full date entering')
         @pytest.mark.xfail
         def test_only_full_date_picker(self, driver):
             date_picker_page = DatePickerPage(driver, url_date)
@@ -72,12 +83,14 @@ class TestWidgets:
             input_date, output_date = date_picker_page.check_only_date_picker_input_fulldate()
             assert input_date == output_date, 'The date was Not changed, after full date input'
 
+        @allure.title('Check separate entering of date data')
         def test_only_separate_data_picker(self, driver):
             date_picker_page = DatePickerPage(driver, url_date)
             date_picker_page.open()
             input_date, output_date = date_picker_page.check_separate_data_input()
             assert input_date == output_date, 'The date was Not changed, after separate date input'
 
+        @allure.title('Check date and time picker')
         @pytest.mark.xfail
         def test_date_and_time_picker(self, driver):
             date_picker_page = DatePickerPage(driver, url_date)
@@ -85,6 +98,7 @@ class TestWidgets:
             input_date, output_date = date_picker_page.check_date_and_time_input()
             assert input_date == output_date, 'The date was Not changed, after full date input'
 
+        @allure.title('Check separate entering date and time')
         def test_date_time_separate_input_picker(self, driver):
             date_picker_page = DatePickerPage(driver, url_date)
             date_picker_page.open()
@@ -92,13 +106,16 @@ class TestWidgets:
             assert start_date != input_date == output_date, ('The date and time were Not changed,'
                                                              ' after separate date input')
 
+    @allure.feature('Test Slider')
     class TestSlider:
+        @allure.title('Check slider')
         def test_slider(self, driver):
             slider_page = SliderPage(driver, url_slider)
             slider_page.open()
             value_before, value_after = slider_page.check_slider()
             assert value_before != value_after, 'The slider value has Not been changed'
 
+        @allure.title('Check progressive bar')
         @pytest.mark.xfail
         def test_progressive_bar(self, driver):
             slider_page = SliderPage(driver, url_bar)
@@ -111,7 +128,9 @@ class TestWidgets:
             else:
                 assert value_before != value_after, 'The progress bar is Not changed'
 
+    @allure.feature('Test Tabs')
     class TestTabs:
+        @allure.title('Check tabs')
         @pytest.mark.xfail
         def test_tabs(self, driver):
             tabs_page = TabsPage(driver, url_tabs)
@@ -122,7 +141,9 @@ class TestWidgets:
                 assert content_list[i] > 0, f'The tab "{title_list[i]}" is empty.'
             assert assert_rez, 'Some tab is Not clickable'
 
+    @allure.feature('Test Tool Tips')
     class TestToolTips:
+        @allure.title('Check tool tips')
         def test_tool_tips(self, driver):
             tool_tips_page = ToolTipsPage(driver, url_tooltips)
             tool_tips_page.open()
@@ -135,7 +156,9 @@ class TestWidgets:
                 f'Hover was missed: {tooltip_contrary_text}'
             assert tooltip_numbers_text == 'You hovered over the 1.10.32', f'Hover was missed: {tooltip_numbers_text}'
 
+    @allure.feature('Test Menu')
     class TestMenu:
+        @allure.title('Check menu')
         @pytest.mark.xfail
         def test_menu(self, driver):
             mockup_title = ['Main Item 1', 'Main Item 2', 'Sub Item', 'Sub Item', 'SUB SUB LIST »',
@@ -145,31 +168,37 @@ class TestWidgets:
             menu_title = menu_page.check_menu()
             assert mockup_title == menu_title, 'Menu is Not match mockup'
 
+    @allure.feature('Test Select Menu')
     class TestSelectMenu:
+        @allure.title('Check select dropdown value')
         def test_select_value_dropdown(self, driver):
             select_menu_page = SelectMenuPage(driver, url_select_menu)
             select_menu_page.open()
             text_before, text_after = select_menu_page.check_select_value_dropdown()
             assert text_before != text_after, 'The value was Not selected'
 
+        @allure.title('Check select dropdown one')
         def test_select_one_dropdown(self, driver):
             select_menu_page = SelectMenuPage(driver, url_select_menu)
             select_menu_page.open()
             text_before, text_after = select_menu_page.check_select_one_dropdown()
             assert text_before != text_after, 'The value was Not selected'
 
+        @allure.title('Check old stile dropdown menu')
         def test_old_stile_menu(self, driver):
             select_menu_page = SelectMenuPage(driver, url_select_menu)
             select_menu_page.open()
             text_before, text_after = select_menu_page.check_old_stile_menu()
             assert text_before != text_after, 'The value was Not selected'
 
+        @allure.title('Check multy dropdown')
         def test_multy_dropdown(self, driver):
             select_menu_page = SelectMenuPage(driver, url_select_menu)
             select_menu_page.open()
             test = select_menu_page.check_multy_dropdown()
             assert test == 1, 'The value was Not selected'
 
+        @allure.title('Check standard multiselect dropdown')
         def test_standard_multiselect(self, driver):
             select_menu_page = SelectMenuPage(driver, url_select_menu)
             select_menu_page.open()

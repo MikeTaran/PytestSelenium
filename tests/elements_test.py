@@ -119,7 +119,6 @@ class TestElements:
             assert text == 'No rows found', ''
 
         @allure.title('Check changing of table rows in the Web Table')
-        @pytest.mark.xfail
         def test_web_table_rows_per_page(self, driver):
             web_table_page = WebTablePage(driver, url_webtable)
             web_table_page.open()

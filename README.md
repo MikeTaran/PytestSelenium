@@ -5,7 +5,7 @@
    * [certificate](https://stepik.org/cert/2139632)
 2. [DemoQA](https://demoqa.com/) : [framework](https://github.com/MikeTaran/PytestSelenium)
 
-   [](./Screenshot_1.png)
+   ![](./Screenshot_1.png)
 
 
 

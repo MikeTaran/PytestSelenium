@@ -1,15 +1,13 @@
 # Test Automation with Pytest+Selenium
 
-1. Stepik - Test Automation with Selenium and Python:
+1. [Re-test bugs: capital.com](https://github.com/MikeTaran/CapitalReTests)
+2. [DemoQA](https://demoqa.com/) : [framework](https://github.com/MikeTaran/PytestSelenium)
+3. Stepik - Test Automation with Selenium and Python:
    * [final project](https://github.com/MikeTaran/stepikFinalProject)
    * [certificate](https://stepik.org/cert/2139632)
-2. [DemoQA](https://demoqa.com/) : [framework](https://github.com/MikeTaran/PytestSelenium)
+
 
    ![](./Screenshot_1.png)
-3. [capital.com](https://github.com/MikeTaran/CapitalReTests)
-
-
-
 
 
 

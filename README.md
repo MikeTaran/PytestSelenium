@@ -2,12 +2,13 @@
 
 1. [Re-test bugs: capital.com](https://github.com/MikeTaran/CapitalReTests)
 2. [DemoQA](https://demoqa.com/) : [framework](https://github.com/MikeTaran/PytestSelenium)
+   ![](./Screenshot_1.png)
 3. Stepik - Test Automation with Selenium and Python:
    * [final project](https://github.com/MikeTaran/stepikFinalProject)
    * [certificate](https://stepik.org/cert/2139632)
 
 
-   ![](./Screenshot_1.png)
+
 
 
 

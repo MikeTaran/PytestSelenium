@@ -6,6 +6,9 @@
 2. [DemoQA](https://demoqa.com/) : [framework](https://github.com/MikeTaran/PytestSelenium)
 
    ![](./Screenshot_1.png)
+3. [capital.com](https://github.com/MikeTaran/CapitalReTests)
+
+
 
 
 
